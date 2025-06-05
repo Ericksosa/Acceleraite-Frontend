@@ -23,11 +23,15 @@ const EditarEmpleado = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Editar Empleado</h2>
-      {empleado && (
-        <FormularioEmpleado empleadoInicial={empleado} onSubmit={handleSubmit} />
-      )}
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-2xl">
+        <h2 className="text-3xl font-bold text-green-700 mb-6 text-center">Editar Empleado</h2>
+        {empleado ? (
+          <FormularioEmpleado empleadoInicial={empleado} onSubmit={handleSubmit} />
+        ) : (
+          <p className="text-center text-gray-500">Cargando datos del empleado...</p>
+        )}
+      </div>
     </div>
   );
 };

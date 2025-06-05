@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-const FormularioEmpleado = ({ empleadoInicial, onSubmit }) => {
+const FormularioUsuario = ({ usuarioInicial, onSubmit }) => {
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    cedula: "",
-    fechaIngreso: "",
-    porcientoComision: "",
-    tandaLabor: "",
+    nombreUsuario: "",
+    correo: "",
+    password: "",
     estadoId: "",
-    usuarioId: "",
+    rolId: "",
   });
 
   useEffect(() => {
-    if (empleadoInicial) setFormData(empleadoInicial);
-  }, [empleadoInicial]);
+    if (usuarioInicial) setFormData(usuarioInicial);
+  }, [usuarioInicial]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,44 +25,23 @@ const FormularioEmpleado = ({ empleadoInicial, onSubmit }) => {
     <form onSubmit={handleSubmit} className="space-y-4 mb-8">
       <div className="grid grid-cols-2 gap-4">
         <input
-          name="nombre"
-          placeholder="Nombre"
-          value={formData.nombre}
+          name="nombreUsuario"
+          placeholder="Nombre Usuario"
+          value={formData.nombreUsuario}
           onChange={handleChange}
           className="border p-2 rounded"
         />
         <input
-          name="apellido"
-          placeholder="Apellido"
-          value={formData.apellido}
+          name="correo"
+          placeholder="Correo"
+          value={formData.correo}
           onChange={handleChange}
           className="border p-2 rounded"
         />
         <input
-          name="cedula"
-          placeholder="Cédula"
-          value={formData.cedula}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
-          type="date"
-          name="fechaIngreso"
-          value={formData.fechaIngreso}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
-          name="porcientoComision"
-          placeholder="% Comisión"
-          value={formData.porcientoComision}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
-          name="tandaLabor"
-          placeholder="Tanda Labor"
-          value={formData.tandaLabor}
+          name="password"
+          placeholder="Contraseña"
+          value={formData.password}
           onChange={handleChange}
           className="border p-2 rounded"
         />
@@ -77,9 +53,9 @@ const FormularioEmpleado = ({ empleadoInicial, onSubmit }) => {
           className="border p-2 rounded"
         />
         <input
-          name="usuarioId"
-          placeholder="Usuario"
-          value={formData.usuarioId}
+          name="rolId"
+          placeholder="Rol"
+          value={formData.rolId}
           onChange={handleChange}
           className="border p-2 rounded"
         />
@@ -104,4 +80,4 @@ const FormularioEmpleado = ({ empleadoInicial, onSubmit }) => {
   );
 };
 
-export default FormularioEmpleado;
+export default FormularioUsuario;

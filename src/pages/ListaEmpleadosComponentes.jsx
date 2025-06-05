@@ -86,8 +86,6 @@ const ListaEmpleados = () => {
           onEdit={handleEditar}
           onDelete={handleEliminar}
         />
-
-        {/* ✅ Modal con Formulario */}
         <Modal isOpen={modalAbierto} onClose={cerrarModal}>
           <FormularioEmpleado
             empleadoInicial={empleadoSeleccionado}
@@ -113,8 +111,11 @@ const ListaEmpleados = () => {
               </tr>
             </thead>
             <tbody>
+              
               {empleados.length > 0 ? (
-                empleados.map((empleado, index) => (
+                empleados
+                .filter((empleado) => empleado.estadoId === 1)
+                .map((empleado, index) => (
                   <tr
                     key={empleado.id}
                     onClick={() => setEmpleadoSeleccionado(empleado)}
