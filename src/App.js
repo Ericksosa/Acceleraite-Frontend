@@ -12,6 +12,8 @@ import CrearUsuario from './pages/usuario/CrearUsuario';
 import EditarUsuario from './pages/usuario/EditarUsuario';
 import CrearTipoVehiculo from './pages/tipovehiculos/CrearTipoVehiculo';
 import EditarTipoVehiculo from './pages/tipovehiculos/EditarTipoVehiculo';
+import LoginPage from './pages/login-page';
+import RegisterPage from './pages/register-page';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<TemporalHome />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/roles" element={<ListaRolesComponentes />} />
         <Route path="/tipo-vehiculos" element={<ListaTipoVehiculosComponentes />} />
         <Route path="/tipo-vehiculos/crear" element={<CrearTipoVehiculo />} />
