@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import { listaRoles } from "../services/RolServices";
 import Layout from "../components/common/Layout";
 import useTitle from "../hooks/useTitle";
+import { listaRoles } from "../services/RolesServices";
 
 const ListaRolesComponentes = () => {
     const [roles, setRoles] = useState([]);

@@ -9,7 +9,7 @@ export const listaRoles = () => {
         console.error("Error fetching roles:", error);
         throw error;
     });
-}
+};
 
 export const obtenerRoles = async () => {
   const response = await axios.get(REST_API_URL);
