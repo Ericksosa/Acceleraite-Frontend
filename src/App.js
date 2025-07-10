@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ListaRolesComponentes from './pages/ListaRolesComponentes';
 import TemporalHome from './components/Home';
 import ListaTipoVehiculosComponentes from './pages/ListaTipoVehiculosComponentes';
+import ListaMarcasComponentes from './pages/ListaMarcasComponentes';
 import ListaEmpleadosComponentes from './pages/ListaEmpleadosComponentes';
 import ListaTipoCombustibleComponentes   from './pages/ListaRolesComponentes';
 import ListaUsuarioComponentes from './pages/ListaUsuarioComponentes';
@@ -12,6 +13,8 @@ import CrearUsuario from './pages/usuario/CrearUsuario';
 import EditarUsuario from './pages/usuario/EditarUsuario';
 import CrearTipoVehiculo from './pages/tipovehiculos/CrearTipoVehiculo';
 import EditarTipoVehiculo from './pages/tipovehiculos/EditarTipoVehiculo';
+import CrearMarca from './pages/marcas/CrearMarca';
+import EditarMarca from './pages/marcas/EditarMarca';
 
 
 function App() {
@@ -21,8 +24,11 @@ function App() {
         <Route path="/" element={<TemporalHome />} />
         <Route path="/roles" element={<ListaRolesComponentes />} />
         <Route path="/tipo-vehiculos" element={<ListaTipoVehiculosComponentes />} />
+        <Route path="/marcas" element={<ListaMarcasComponentes />} />
         <Route path="/tipo-vehiculos/crear" element={<CrearTipoVehiculo />} />
         <Route path="/tipo-vehiculos/editar/:id" element={<EditarTipoVehiculo />} />
+        <Route path="/marcas/crear" element={<CrearMarca />} />
+        <Route path="/marcas/editar/:id" element={<EditarMarca />} />
         <Route path="/empleados" element={<ListaEmpleadosComponentes />} />
         <Route path="/empleados/crear" element={<CrearEmpleado />} />
         <Route path="/empleados/editar/:id" element={<EditarEmpleado />} />

@@ -30,6 +30,9 @@ const Layout = ({ children }) => {
             <Link to="/tipo-combustible" className="hover:text-blue-600 transition-colors duration-300">
               Tipo Combustible
             </Link>
+            <Link to="/marcas" className="hover:text-blue-600 transition-colors duration-300">
+              Marcas
+            </Link>
           </div>
         </div>
       </nav>
