@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom';
+import {Menu, X } from "lucide-react"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const Layout = ({ children }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const navLinks = [
+    { label: "Inicio", to: "/" },
+    { label: "Roles", to: "/roles"},
+    { label: "Tipo Vehículos", to: "/tipo-vehiculos"},
+    { label: "Empleados", to: "/empleados" },
+    { label: "Tipo Combustible", to: "/tipo-combustible" },
+    { label: "Usuarios", to: "/usuarios" },
+  ]
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navbar */}
@@ -35,17 +48,35 @@ const Layout = ({ children }) => {
             </Link>
           </div>
         </div>
-      </nav>
 
-      {/* Contenido principal */}
-      <main className="flex-grow">{children}</main>
+        {isMenuOpen && (
+          <div className="md:hidden border-t">
+            {navLinks.map(({ label, to }) => (
+              <Link
+                key={label}
+                to={to}
+                className="block px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                {label}
+              </Link>
+            ))}
+            <div className="border-t px-4 py-3">
+              <button className="block w-full text-left px-2 py-2 hover:bg-gray-100 rounded">Iniciar Sesión</button>
+              <button className="block w-full text-left px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2">
+                Registrarse
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
 
-      {/* Footer */}
-      <footer className="bg-white text-black text-center py-4 border-t border-blue-200">
-        © 2025 Accelerilate
+      <main className="flex-grow px-4 sm:px-6 lg:px-8 py-6">{children}</main>
+
+      <footer className="bg-white text-gray-700 text-center py-4 border-t border-blue-200 text-sm">
+        © 2025 Accelerilate. Todos los derechos reservados.
       </footer>
     </div>
-  );
-};
+  )
+}
 
 export default Layout;
