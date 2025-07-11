@@ -4,8 +4,9 @@ import ListaRolesComponentes from './pages/ListaRolesComponentes';
 import TemporalHome from './components/Home';
 import ListaTipoVehiculosComponentes from './pages/ListaTipoVehiculosComponentes';
 import ListaMarcasComponentes from './pages/ListaMarcasComponentes';
+import ListaModelosComponentes from './pages/ListaModelosComponentes';
 import ListaEmpleadosComponentes from './pages/ListaEmpleadosComponentes';
-import ListaTipoCombustibleComponentes   from './pages/ListaRolesComponentes';
+import ListaTipoCombustibleComponentes from './pages/ListaTipoCombustibleComponentes';
 import ListaUsuarioComponentes from './pages/ListaUsuarioComponentes';
 import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
@@ -17,6 +18,8 @@ import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page';
 import CrearMarca from './pages/marcas/CrearMarca';
 import EditarMarca from './pages/marcas/EditarMarca';
+import CrearModelos from './pages/modelos/CrearModelos';
+import EditarModelos from './pages/modelos/EditarModelos';
 
 
 function App() {
@@ -29,10 +32,13 @@ function App() {
         <Route path="/roles" element={<ListaRolesComponentes />} />
         <Route path="/tipo-vehiculos" element={<ListaTipoVehiculosComponentes />} />
         <Route path="/marcas" element={<ListaMarcasComponentes />} />
+        <Route path="/modelos" element={<ListaModelosComponentes />} />
         <Route path="/tipo-vehiculos/crear" element={<CrearTipoVehiculo />} />
         <Route path="/tipo-vehiculos/editar/:id" element={<EditarTipoVehiculo />} />
         <Route path="/marcas/crear" element={<CrearMarca />} />
         <Route path="/marcas/editar/:id" element={<EditarMarca />} />
+        <Route path="/modelos/crear" element={<CrearModelos />} />
+        <Route path="/modelos/editar/:id" element={<EditarModelos />} />
         <Route path="/empleados" element={<ListaEmpleadosComponentes />} />
         <Route path="/empleados/crear" element={<CrearEmpleado />} />
         <Route path="/empleados/editar/:id" element={<EditarEmpleado />} />
