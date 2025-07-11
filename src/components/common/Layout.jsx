@@ -16,26 +16,26 @@ const Layout = ({ children }) => {
     { label: "Modelos", to: "/modelos" },
   ];
 
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navbar */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link
-                to="/"
-                className="ml-4 text-gray-700 hover:text-blue-600 font-medium transition-colors"
-              >
-                <img
-                  src="/1.png"
-                  alt="Accelerilate"
-                  className="h-16 w-auto mr-2"
-                />
-              </Link>
-            </div>
+            <Link to="/" className="flex items-center">
+              <img
+                src="/1.png"
+                alt="Accelerilate"
+                className="h-16 w-auto mr-2"
+              />
+            </Link>
 
-            <nav className="hidden md:flex space-x-8">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-6">
               {navLinks.map(({ label, to }) => (
                 <Link
                   key={label}
@@ -47,20 +47,22 @@ const Layout = ({ children }) => {
               ))}
             </nav>
 
+            {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/login" className="hover:underline">
+              <Link to="/login">
                 <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">
                   Iniciar Sesión
                 </button>
               </Link>
 
-              <Link to="/register" className="hover:underline">
+              <Link to="/register">
                 <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
                   Registrarse
                 </button>
               </Link>
             </div>
 
+            {/* Mobile Menu Toggle */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -72,31 +74,41 @@ const Layout = ({ children }) => {
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t">
+          <div className="md:hidden border-t bg-white shadow">
             {navLinks.map(({ label, to }) => (
               <Link
                 key={label}
                 to={to}
-                className="block px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                onClick={handleLinkClick}
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 {label}
               </Link>
             ))}
+
             <div className="border-t px-4 py-3">
-              <button className="block w-full text-left px-2 py-2 hover:bg-gray-100 rounded">
-                Iniciar Sesión
-              </button>
-              <button className="block w-full text-left px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2">
-                Registrarse
-              </button>
+              <Link to="/login" onClick={handleLinkClick}>
+                <button className="w-full text-left px-2 py-2 hover:bg-gray-100 rounded">
+                  Iniciar Sesión
+                </button>
+              </Link>
+
+              <Link to="/register" onClick={handleLinkClick}>
+                <button className="w-full text-left px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2">
+                  Registrarse
+                </button>
+              </Link>
             </div>
           </div>
         )}
       </header>
 
+      {/* Contenido */}
       <main className="flex-grow px-4 sm:px-6 lg:px-8 py-6">{children}</main>
 
+      {/* Footer */}
       <footer className="bg-white text-gray-700 text-center py-4 border-t border-blue-200 text-sm">
         © 2025 Accelerilate. Todos los derechos reservados.
       </footer>
