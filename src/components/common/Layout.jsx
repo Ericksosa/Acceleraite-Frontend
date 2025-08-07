@@ -1,9 +1,22 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const usuario = localStorage.getItem("usuario");
+    setUsuarioAutenticado(!!usuario);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("usuario");
+    setUsuarioAutenticado(false);
+    navigate("/");
+  };
 
   const navLinks = [
     { label: "Inicio", to: "/" },
@@ -50,17 +63,27 @@ const Layout = ({ children }) => {
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/login">
-                <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">
-                  Iniciar Sesión
+              {!usuarioAutenticado ? (
+                <>
+                  <Link to="/login">
+                    <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">
+                      Iniciar Sesión
+                    </button>
+                  </Link>
+                  <Link to="/register">
+                    <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
+                      Registrarse
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="text-sm bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                >
+                  Cerrar Sesión
                 </button>
-              </Link>
-
-              <Link to="/register">
-                <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
-                  Registrarse
-                </button>
-              </Link>
+              )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -90,17 +113,30 @@ const Layout = ({ children }) => {
             ))}
 
             <div className="border-t px-4 py-3">
-              <Link to="/login" onClick={handleLinkClick}>
-                <button className="w-full text-left px-2 py-2 hover:bg-gray-100 rounded">
-                  Iniciar Sesión
+              {!usuarioAutenticado ? (
+                <>
+                  <Link to="/login" onClick={handleLinkClick}>
+                    <button className="w-full text-left px-2 py-2 hover:bg-gray-100 rounded">
+                      Iniciar Sesión
+                    </button>
+                  </Link>
+                  <Link to="/register" onClick={handleLinkClick}>
+                    <button className="w-full text-left px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2">
+                      Registrarse
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLinkClick();
+                    handleLogout();
+                  }}
+                  className="w-full text-left px-2 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                  Cerrar Sesión
                 </button>
-              </Link>
-
-              <Link to="/register" onClick={handleLinkClick}>
-                <button className="w-full text-left px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2">
-                  Registrarse
-                </button>
-              </Link>
+              )}
             </div>
           </div>
         )}
