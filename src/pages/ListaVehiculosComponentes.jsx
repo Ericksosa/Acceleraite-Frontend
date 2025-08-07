@@ -13,7 +13,8 @@ import {
   eliminarVehiculo,
 } from "../services/VehiculoService";
 
-const ListaVehiculo = () => {
+
+const ListaVehiculos = () => {
   const [vehiculos, setVehiculos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -23,11 +24,15 @@ const ListaVehiculo = () => {
   useEffect(() => {
     cargarVehiculos();
   }, []);
-  debugger;
+
   const cargarVehiculos = async () => {
     const datos = await obtenerVehiculo();
     setVehiculos(datos);
     console.log(datos);
+
+  const cargarVehiculos = async () => {
+    const datos = await obtenerVehiculos();
+    setVehiculos(datos);
   };
 
   const navigate = useNavigate();
@@ -94,13 +99,14 @@ const ListaVehiculo = () => {
           />
         </Modal>
 
+
         <div className="relative overflow-x-auto rounded-lg border border-blue-200 shadow-sm">
           <table className="w-full text-sm text-left text-gray-700">
             <thead className="text-xs uppercase bg-blue-500 text-white">
               <tr>
                 <th className="px-6 py-3">ID</th>
-                 <th className="px-6 py-3">Color</th>
-                <th className="px-6 py-3">Numero de chasis</th>
+                <th className="px-6 py-3">Color</th>
+                <th className="px-6 py-3">Número de chasis</th>
                 <th className="px-6 py-3">Descripción</th>
                 <th className="px-6 py-3">Numero de Placa</th>
                 <th className="px-6 py-3">Estado</th>
@@ -129,7 +135,7 @@ const ListaVehiculo = () => {
                       <td className="px-6 py-4">{vehiculo.color}</td>
                       <td className="px-6 py-4">{vehiculo.noChasis}</td>
                       <td className="px-6 py-4">{vehiculo.descripcion}</td>
-                       <td className="px-6 py-4">{vehiculo.noPlaca}</td>
+                      <td className="px-6 py-4">{vehiculo.noPlaca}</td>
                       <td className="px-6 py-4">{vehiculo.estadoId}</td>
                       <td className="px-6 py-4">{vehiculo.modeloId}</td>
                       <td className="px-6 py-4">{vehiculo.tipocombustibleId}</td>
@@ -138,7 +144,7 @@ const ListaVehiculo = () => {
                   ))
               ) : (
                 <tr className="bg-white">
-                  <td colSpan="9" className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan="10" className="px-6 py-4 text-center text-gray-500">
                     No hay vehículos disponibles
                   </td>
                 </tr>
@@ -151,4 +157,4 @@ const ListaVehiculo = () => {
   );
 };
 
-export default ListaVehiculo;
+export default ListaVehiculos;

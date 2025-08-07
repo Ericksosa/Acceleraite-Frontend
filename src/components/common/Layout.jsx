@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
     { label: "Usuarios", to: "/usuarios" },
     { label: "Marcas", to: "/marcas" },
     { label: "Modelos", to: "/modelos" },
-    { label: "Vehiculos", to: "/vehiculos" },
+    { label: "Vehículos", to: "/vehiculos" },
   ];
 
   const handleLinkClick = () => {

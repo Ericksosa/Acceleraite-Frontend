@@ -10,6 +10,7 @@ import ListaTipoCombustibleComponentes from './pages/ListaTipoCombustibleCompone
 import CrearTipoCombustible from './pages/tipo-combustible/CrearTipoCombustible';
 import EditarTipoCombustible from './pages/tipo-combustible/EditarTipoCombustible';
 import ListaUsuarioComponentes from './pages/ListaUsuarioComponentes';
+import ListaVehiculosComponentes from './pages/ListaVehiculosComponentes';
 import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
 import CrearUsuario from './pages/usuario/CrearUsuario';
@@ -56,7 +57,7 @@ function App() {
         <Route path="/vehiculos" element={<ListaVehiculosComponentes />} />
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
-        
+
       </Routes>
     </Router>
   );
