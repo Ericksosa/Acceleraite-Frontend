@@ -23,9 +23,9 @@ import CrearMarca from './pages/marcas/CrearMarca';
 import EditarMarca from './pages/marcas/EditarMarca';
 import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
-import CrearVehiculo from './pages/vehiculos/CrearVehiculo';
-import EditarVehiculo from './pages/vehiculos/EditarVehiculo';
-
+import CrearVehiculo from './pages/Vehiculos/CrearVehiculo';
+import EditarVehiculo from './pages/Vehiculos/EditarVehiculo';
+import ListaVehiculosComponentes from './pages/ListaVehiculosComponentes';
 
 
 function App() {
@@ -57,6 +57,7 @@ function App() {
         <Route path="/vehiculos" element={<ListaVehiculosComponentes />} />
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
+
       </Routes>
     </Router>
   );
