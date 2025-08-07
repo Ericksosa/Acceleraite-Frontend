@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
     navigate("/");
   };
 
+  
   const navLinks = [
     { label: "Inicio", to: "/" },
     { label: "Roles", to: "/roles" },
