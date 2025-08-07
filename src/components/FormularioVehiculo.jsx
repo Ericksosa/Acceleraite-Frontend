@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 
 const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
   const [formData, setFormData] = useState({
-    noChasis: "",
     descripcion: "",
-    estadoId: "",
+    noChasis: "",
+    noMotor: "",
+    noPlaca: "",
+    color: "",
+    tipoCombustibleId: "",
     modeloId: "",
+    tipoVehiculoId: "",
+    estadoId: "",
   });
 
   useEffect(() => {
@@ -17,6 +22,7 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const datosFinales = {
       ...formData,
       estadoId: parseInt(formData.estadoId, 10) || null,
@@ -27,63 +33,70 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mb-8">
       <div className="grid grid-cols-2 gap-4">
-        <input
+         <input
+          name="descripcion"
+          placeholder="Descripción"
+          value={formData.descripcion}
+          className="border p-2 rounded"
+         />
+            
+         <input
           name="noChasis"
           placeholder="noChasis"
           value={formData.noChasis}
           onChange={handleChange}
           className="border p-2 rounded"
         />
+            
         <input
-          name="descripcion"
-          placeholder="Descripción"
-          value={formData.descripcion}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
-          name="estadoId"
-          placeholder="Estado"
-          value={formData.estadoId}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
-          name="color"
-          placeholder="color"
-          value={formData.color}
+          name="noMotor"
+          placeholder="NoMotor"
+          value={formData.noMotor}
           onChange={handleChange}
           className="border p-2 rounded"
         />
          <input
-          name="modeloId"
-          placeholder="modeloId"
-          value={formData.modeloId}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
           name="noPlaca"
           placeholder="noPlaca"
           value={formData.noPlaca}
           onChange={handleChange}
           className="border p-2 rounded"
         />
-        <input
-          name="tipocombustibleId"
-          placeholder="tipocombustibleId"
-          value={formData.tipocombustibleId}
+         <input
+          name="color"
+          placeholder="Color"
+          value={formData.color}
           onChange={handleChange}
           className="border p-2 rounded"
         />
         <input
+          name="tipoCombustibleId"
+          placeholder="Tipo Combustible ID"
+          value={formData.tipoCombustibleId}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        />
+                    
+        <input
+          name="modeloId"
+          placeholder="modeloId"
+          value={formData.modeloId}
+          className="border p-2 rounded"
+         />
+         <input
           name="tipovehiculoId"
           placeholder="tipovehiculoID"
-          value={formData.tipovehiculoId}
-          onChange={handleChange}
+          value={formData.tipoVehiculoId}
+          className="border p-2 rounded"
+        />
+        <input
+          name="estadoId"
+          placeholder="Estado"
+          value={formData.estadoId}
           className="border p-2 rounded"
         />
       </div>
+
       <div className="flex justify-end gap-4 mt-6">
         <button
           type="button"
@@ -92,6 +105,7 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
         >
           Cancelar
         </button>
+
 
         <button
           type="submit"
