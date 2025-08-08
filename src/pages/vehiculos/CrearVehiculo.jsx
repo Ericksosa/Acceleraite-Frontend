@@ -1,6 +1,7 @@
 import FormularioVehiculo from "../../components/FormularioVehiculo";
-import { crearVehiculo } from "../../services/VehiculoServices";
 import { useNavigate } from "react-router-dom";
+import { crearVehiculo } from "../../services/VehiculoServices";
+
 
 const CrearVehiculo = () => {
   const navigate = useNavigate();

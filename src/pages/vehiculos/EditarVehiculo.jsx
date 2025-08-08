@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { editarVehiculo, obtenerVehiculos } from "../../services/VehiculoServices";
 import FormularioVehiculo from "../../components/FormularioVehiculo";
+import { editarVehiculo, obtenerVehiculos } from "../../services/VehiculoServices";
+
 
 const EditarVehiculo = () => {
   const { id } = useParams();
