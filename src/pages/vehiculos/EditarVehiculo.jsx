@@ -11,7 +11,7 @@ const EditarVehiculo = () => {
   useEffect(() => {
     const cargar = async () => {
       const vehiculos = await obtenerVehiculos();
-      const encontrado = vehiculos.find((v) => v.id === parseInt(id));
+      const encontrado = vehiculos.find((e) => e.id === parseInt(id));
       setVehiculo(encontrado);
     };
     cargar();
