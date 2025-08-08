@@ -37,6 +37,7 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
           name="descripcion"
           placeholder="Descripción"
           value={formData.descripcion}
+          onChange={handleChange}
           className="border p-2 rounded"
          />
             
@@ -81,18 +82,21 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
           name="modeloId"
           placeholder="modeloId"
           value={formData.modeloId}
+          onChange={handleChange}
           className="border p-2 rounded"
          />
-         <input
-          name="tipovehiculoId"
+        <input
+          name="tipoVehiculoId"
           placeholder="tipovehiculoID"
           value={formData.tipoVehiculoId}
+          onChange={handleChange}
           className="border p-2 rounded"
         />
         <input
           name="estadoId"
           placeholder="Estado"
           value={formData.estadoId}
+          onChange={handleChange}
           className="border p-2 rounded"
         />
       </div>
