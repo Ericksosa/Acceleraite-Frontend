@@ -2,6 +2,15 @@ import axios from 'axios';
 
 const REST_API_URL = 'http://localhost:8080/api/vehiculos';
 
+export const listaVehiculos = () => {
+    return axios.get(REST_API_URL)
+    .then(response => response.data)
+    .catch(error => {
+        console.error("Error fetching de vehiculos: ", error);
+        throw error;
+    });
+} 
+
 export const obtenerVehiculos = async () => {
   const response = await axios.get(REST_API_URL);
   return response.data;

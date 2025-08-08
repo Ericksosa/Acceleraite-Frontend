@@ -25,8 +25,6 @@ import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
 import CrearVehiculo from './pages/Vehiculos/CrearVehiculo';
 import EditarVehiculo from './pages/Vehiculos/EditarVehiculo';
-import ListaVehiculosComponentes from './pages/ListaVehiculosComponentes';
-
 
 function App() {
   return (
