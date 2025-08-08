@@ -15,16 +15,16 @@ import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
 import CrearUsuario from './pages/usuario/CrearUsuario';
 import EditarUsuario from './pages/usuario/EditarUsuario';
-import CrearTipoVehiculo from './pages/tipovehiculos/CrearTipoVehiculo';
-import EditarTipoVehiculo from './pages/tipovehiculos/EditarTipoVehiculo';
+import CrearTipoVehiculo from './pages/tipo-vehiculos/CrearTipoVehiculo';
+import EditarTipoVehiculo from './pages/tipo-vehiculos/EditarTipoVehiculo';
 import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page';
 import CrearMarca from './pages/marcas/CrearMarca';
 import EditarMarca from './pages/marcas/EditarMarca';
 import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
-import CrearVehiculo from './pages/Vehiculos/CrearVehiculo';
-import EditarVehiculo from './pages/Vehiculos/EditarVehiculo';
+import EditarVehiculo from './pages/vehiculo/EditarVehiculo.jsx';
+import CrearVehiculo from './pages/vehiculo/CrearVehiculo.jsx';
 
 function App() {
   return (
