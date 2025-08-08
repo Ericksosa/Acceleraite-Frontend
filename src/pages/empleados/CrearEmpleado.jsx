@@ -1,5 +1,5 @@
-import FormularioVechiculo from "../../components/FormularioEmpleado";
-import { crearVehiculo } from "../../services/EmpleadosServices";
+import FormularioEmpleado from "../../components/FormularioEmpleado";
+import { crearEmpleado } from "../../services/EmpleadosServices";
 import { useNavigate } from "react-router-dom";
 
 const CrearEmpleado = () => {
