@@ -7,12 +7,11 @@ import Modal from "../components/common/Modal";
 import { useNavigate } from "react-router-dom";
 
 import {
-  obtenerVehiculo,
+  obtenerVehiculos,
   crearVehiculo,
   editarVehiculo,
   eliminarVehiculo,
-} from "../services/VehiculoService";
-
+} from "../services/VehiculoServices";
 
 const ListaVehiculos = () => {
   const [vehiculos, setVehiculos] = useState([]);
@@ -24,11 +23,6 @@ const ListaVehiculos = () => {
   useEffect(() => {
     cargarVehiculos();
   }, []);
-
-  const cargarVehiculos = async () => {
-    const datos = await obtenerVehiculo();
-    setVehiculos(datos);
-    console.log(datos);
 
   const cargarVehiculos = async () => {
     const datos = await obtenerVehiculos();
@@ -60,7 +54,7 @@ const ListaVehiculos = () => {
         setVehiculoSeleccionado(null);
       } catch (error) {
         console.error("Error al eliminar:", error);
-        alert("Ocurrió un error al eliminar el vehículo. Por favor, inténtalo de nuevo.");
+        alert("Ocurrió un error al eliminar el vehículo");
       }
     }
   };
@@ -99,20 +93,21 @@ const ListaVehiculos = () => {
           />
         </Modal>
 
-
+        {/* Tabla de vehículos */}
         <div className="relative overflow-x-auto rounded-lg border border-blue-200 shadow-sm">
           <table className="w-full text-sm text-left text-gray-700">
             <thead className="text-xs uppercase bg-blue-500 text-white">
               <tr>
                 <th className="px-6 py-3">ID</th>
-                <th className="px-6 py-3">Color</th>
-                <th className="px-6 py-3">Número de chasis</th>
                 <th className="px-6 py-3">Descripción</th>
-                <th className="px-6 py-3">Numero de Placa</th>
-                <th className="px-6 py-3">Estado</th>
+                <th className="px-6 py-3">Chasis</th>
+                <th className="px-6 py-3">Motor</th>
+                <th className="px-6 py-3">Placa</th>
+                <th className="px-6 py-3">Color</th>
+                <th className="px-6 py-3">Tipo Combustible</th>
                 <th className="px-6 py-3">Modelo</th>
-                <th className="px-6 py-3">Tipo de combustible</th>
-                <th className="px-6 py-3">Tipo de vehiculo</th>
+                <th className="px-6 py-3">Tipo Vehículo</th>
+                <th className="px-6 py-3">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -132,14 +127,15 @@ const ListaVehiculos = () => {
                       }`}
                     >
                       <td className="px-6 py-4 font-semibold text-blue-900">{vehiculo.id}</td>
-                      <td className="px-6 py-4">{vehiculo.color}</td>
-                      <td className="px-6 py-4">{vehiculo.noChasis}</td>
                       <td className="px-6 py-4">{vehiculo.descripcion}</td>
+                      <td className="px-6 py-4">{vehiculo.noChasis}</td>
+                      <td className="px-6 py-4">{vehiculo.noMotor}</td>
                       <td className="px-6 py-4">{vehiculo.noPlaca}</td>
-                      <td className="px-6 py-4">{vehiculo.estadoId}</td>
+                      <td className="px-6 py-4">{vehiculo.color}</td>
+                      <td className="px-6 py-4">{vehiculo.tipoCombustibleId}</td>
                       <td className="px-6 py-4">{vehiculo.modeloId}</td>
-                      <td className="px-6 py-4">{vehiculo.tipocombustibleId}</td>
-                      <td className="px-6 py-4">{vehiculo.tipovehiculoId}</td>
+                      <td className="px-6 py-4">{vehiculo.tipoVehiculoId}</td>
+                      <td className="px-6 py-4">{vehiculo.estadoId}</td>
                     </tr>
                   ))
               ) : (
