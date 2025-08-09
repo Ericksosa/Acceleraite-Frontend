@@ -1,8 +1,7 @@
-import  React from "react";
+import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUsuario } from "../services/UsuariosServices";
-
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const LoginPage = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -44,10 +43,14 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">Iniciar Sesión</h2>
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
+          Iniciar Sesión
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Correo Electrónico</label>
+            <label className="block text-gray-700 font-semibold mb-1">
+              Correo Electrónico
+            </label>
             <input
               type="email"
               name="correo"
@@ -58,7 +61,9 @@ const LoginPage = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Contraseña</label>
+            <label className="block text-gray-700 font-semibold mb-1">
+              Contraseña
+            </label>
             <input
               type="password"
               name="password"
@@ -77,23 +82,25 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <Link to="/forgot-password" className="text-blue-500 hover:underline text-sm">
+          <Link
+            to="/forgot-password"
+            className="text-blue-500 hover:underline text-sm"
+          >
             ¿Olvidaste tu contraseña?
           </Link>
         </div>
         <div className="mt-2 text-center">
           <span className="text-gray-600 text-sm">¿No tienes cuenta?</span>{" "}
-          <Link to="/register" className="text-blue-500 hover:underline text-sm">
+          <Link
+            to="/register"
+            className="text-blue-500 hover:underline text-sm"
+          >
             Regístrate
           </Link>
         </div>
       </div>
     </div>
   );
-
-
-
-
 };
 
 export default LoginPage;
