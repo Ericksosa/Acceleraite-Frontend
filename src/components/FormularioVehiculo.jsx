@@ -76,10 +76,10 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
           value={formData.modeloId}
           onChange={handleChange}
           className="border p-2 rounded"
-        />
+         />
         <input
           name="tipoVehiculoId"
-          placeholder="Tipo Vehículo ID"
+          placeholder="tipovehiculoID"
           value={formData.tipoVehiculoId}
           onChange={handleChange}
           className="border p-2 rounded"
