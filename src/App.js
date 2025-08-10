@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ListaRolesComponentes from './pages/ListaRolesComponentes';
-import TemporalHome from './components/Home';
+import TemporalHome from './components/Home.jsx';
 import ListaTipoVehiculosComponentes from './pages/ListaTipoVehiculosComponentes';
 import ListaMarcasComponentes from './pages/ListaMarcasComponentes';
 import ListaModelosComponentes from './pages/ListaModelosComponentes';
@@ -25,12 +25,14 @@ import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
 import EditarVehiculo from './pages/vehiculo/EditarVehiculo.jsx';
 import CrearVehiculo from './pages/vehiculo/CrearVehiculo.jsx';
+import HomeCliente from './components/HomeCliente.jsx';
+
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<TemporalHome />} />
+        <Route path="/" element={<HomeCliente />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/roles" element={<ListaRolesComponentes />} />
@@ -55,6 +57,7 @@ function App() {
         <Route path="/vehiculos" element={<ListaVehiculosComponentes />} />
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
+        <Route path="/admin/dashboard" element={<TemporalHome />} />
 
       </Routes>
     </Router>
