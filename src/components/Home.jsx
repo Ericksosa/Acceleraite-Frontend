@@ -15,7 +15,6 @@ const TemporalHome = () => {
 
         <div className="bg-white rounded-lg shadow-lg max-w-4xl mx-auto mt-12 p-6 text-left">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Ubicación */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Ubicación</label>
               <div className="relative">
