@@ -23,8 +23,8 @@ import CrearMarca from './pages/marcas/CrearMarca';
 import EditarMarca from './pages/marcas/EditarMarca';
 import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
-import EditarVehiculo from './pages/vehiculo/EditarVehiculo.jsx';
-import CrearVehiculo from './pages/vehiculo/CrearVehiculo.jsx';
+import EditarVehiculo from './pages/vehiculos/EditarVehiculo.jsx';
+import CrearVehiculo from './pages/vehiculos/CrearVehiculo.jsx';
 import HomeCliente from './components/HomeCliente.jsx';
 
 
