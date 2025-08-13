@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/common/Layout";
-import BotonesAcciones from "../components/common/BotonesAcciones";
 import FormularioTipoVehiculo from "../components/FormularioTipoVehiculo";
 import useTitle from "../hooks/useTitle";
 import Modal from "../components/common/Modal";
 import { useNavigate } from "react-router-dom";
-import { Car, Plus, Edit3, Trash2, Search, Filter, Tag, Star, Zap } from "lucide-react";
+import { Car, Plus, Edit3, Trash2, Search, Tag, Star, Zap } from "lucide-react";
 
 import {
   obtenerTipoVehiculo,

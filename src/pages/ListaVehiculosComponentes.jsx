@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
-import BotonesAcciones from "../components/common/BotonesAcciones";
 import FormularioVehiculo from "../components/FormularioVehiculo";
 import Modal from "../components/common/Modal";
 import useTitle from "../hooks/useTitle";
@@ -13,11 +12,14 @@ import {
   eliminarVehiculo,
 } from "../services/VehiculoServices";
 
+
+import { Car, Plus, Edit3, Trash2, Search } from "lucide-react";
+
 const ListaVehiculos = () => {
-  // estado local
   const [vehiculos, setVehiculos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); 
   const navigate = useNavigate();
 
   useTitle("Vehículos");
@@ -27,13 +29,26 @@ const ListaVehiculos = () => {
     const fetchVehiculos = async () => {
       try {
         const datos = await obtenerVehiculos();
-        setVehiculos(datos);
+        setVehiculos(datos || []);
       } catch (err) {
         console.error("Error cargando vehículos:", err);
+        setVehiculos([]);
       }
     };
     fetchVehiculos();
   }, []);
+
+  // filtrar por búsqueda (usa searchTerm)
+  const vehiculosFiltrados = vehiculos.filter((v) => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return true;
+    // ajusta campos si tu objeto tiene otras propiedades
+    return (
+      (v.descripcion || "").toLowerCase().includes(term) ||
+      (v.noPlaca || "").toLowerCase().includes(term) ||
+      (String(v.id) || "").includes(term)
+    );
+  });
 
   // acciones principales
   const handleCrear = () => navigate("/vehiculos/crear");
@@ -53,7 +68,7 @@ const ListaVehiculos = () => {
     try {
       await eliminarVehiculo(vehiculoSeleccionado.id);
       const datosActualizados = await obtenerVehiculos();
-      setVehiculos(datosActualizados);
+      setVehiculos(datosActualizados || []);
       setVehiculoSeleccionado(null);
     } catch (error) {
       console.error("Error al eliminar:", error);
@@ -69,7 +84,7 @@ const ListaVehiculos = () => {
         await crearVehiculo(vehiculo);
       }
       const datosActualizados = await obtenerVehiculos();
-      setVehiculos(datosActualizados);
+      setVehiculos(datosActualizados || []);
       setModalAbierto(false);
       setVehiculoSeleccionado(null);
     } catch (error) {
@@ -85,83 +100,192 @@ const ListaVehiculos = () => {
 
   return (
     <Layout>
-      <h2 className="text-3xl font-bold text-blue-600 mb-6 mt-4 text-center">
-        Lista de Vehículos
-      </h2>
+      <div className="min-h-screen bg-gray-50">
+        {/* Hero Header */}
+        <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="bg-white bg-opacity-20 p-4 rounded-full">
+                  <Car className="h-12 w-12" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                Lista de Vehículos
+              </h1>
+              <p className="text-xl text-blue-100 mb-8">
+                Gestiona todos los vehículos disponibles en la flota
+              </p>
 
-      <div className="px-4">
-        <BotonesAcciones
-          onCreate={handleCrear}
-          onEdit={handleEditar}
-          onDelete={handleEliminar}
-        />
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+                  <div className="flex items-center justify-center mb-2">
+                    <Car className="h-8 w-8 text-blue-200" />
+                  </div>
+                  <div className="text-2xl font-bold">
+                    {vehiculosFiltrados.length}
+                  </div>
+                  <div className="text-blue-200">Vehículos Disponibles</div>
+                </div>
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+                  <div className="flex items-center justify-center mb-2">
+                    <Plus className="h-8 w-8 text-green-200" />
+                  </div>
+                  <div className="text-2xl font-bold">100%</div>
+                  <div className="text-blue-200">Operativos</div>
+                </div>
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+                  <div className="flex items-center justify-center mb-2">
+                    <Trash2 className="h-8 w-8 text-yellow-200" />
+                  </div>
+                  <div className="text-2xl font-bold">0</div>
+                  <div className="text-blue-200">En Mantenimiento</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <Modal isOpen={modalAbierto} onClose={cerrarModal}>
-          <FormularioVehiculo
-            vehiculoInicial={vehiculoSeleccionado}
-            onSubmit={handleSubmitFormulario}
-            onCancel={cerrarModal}
-          />
-        </Modal>
+        {/* Actions Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              {/* Search */}
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Buscar vehículo..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
 
-        <div className="relative overflow-x-auto rounded-lg border border-blue-200 shadow-sm">
-          <table className="w-full text-sm text-left text-gray-700">
-            <thead className="text-xs uppercase bg-blue-500 text-white">
-              <tr>
-                <th className="px-6 py-3">ID</th>
-                <th className="px-6 py-3">Color</th>
-                <th className="px-6 py-3">Número de chasis</th>
-                <th className="px-6 py-3">Descripción</th>
-                <th className="px-6 py-3">Placa</th>
-                <th className="px-6 py-3">Monto/Día</th>
-                <th className="px-6 py-3">Tipo Combustible</th>
-                <th className="px-6 py-3">Modelo</th>
-                <th className="px-6 py-3">Tipo Vehículo</th>
-                <th className="px-6 py-3">Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehiculos.length > 0 ? (
-                vehiculos
-                  .filter((v) => v.estadoId === 1)
-                  .map((v, idx) => (
-                    <tr
-                      key={v.id}
-                      onClick={() => setVehiculoSeleccionado(v)}
-                      className={`cursor-pointer border-b ${
-                        vehiculoSeleccionado?.id === v.id
-                          ? "bg-yellow-100"
-                          : idx % 2 === 0
-                          ? "bg-blue-50"
-                          : "bg-blue-100"
-                      }`}
-                    >
-                      <td className="px-6 py-4 font-semibold text-blue-900">
-                        {v.id}
-                      </td>
-                      <td className="px-6 py-4">{v.color}</td>
-                      <td className="px-6 py-4">{v.noChasis}</td>
-                      <td className="px-6 py-4">{v.descripcion}</td>
-                      <td className="px-6 py-4">{v.noPlaca}</td>
-                      <td className="px-6 py-4">{v.montoPorDia}</td>
-                      <td className="px-6 py-4">{v.tipoCombustibleId}</td>
-                      <td className="px-6 py-4">{v.modeloId}</td>
-                      <td className="px-6 py-4">{v.tipoVehiculoId}</td>
-                      <td className="px-6 py-4">{v.estadoId}</td>
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={handleCrear}
+                  className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                  Nuevo Vehículo
+                </button>
+                <button
+                  onClick={handleEditar}
+                  disabled={!vehiculoSeleccionado}
+                  className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  <Edit3 className="h-4 w-4" />
+                  Editar
+                </button>
+                <button
+                  onClick={handleEliminar}
+                  disabled={!vehiculoSeleccionado}
+                  className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal */}
+          <Modal isOpen={modalAbierto} onClose={cerrarModal}>
+            <div className="bg-white rounded-xl shadow-lg max-w-2xl mx-auto">
+              <FormularioVehiculo
+                vehiculoInicial={vehiculoSeleccionado}
+                onSubmit={handleSubmitFormulario}
+                onCancel={cerrarModal}
+              />
+            </div>
+          </Modal>
+
+          {/* Lista de Vehículos */}
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Vehículos ({vehiculosFiltrados.length})
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Administra la flota disponible
+              </p>
+            </div>
+
+            {vehiculosFiltrados.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-sm text-left text-gray-700">
+                  <thead className="text-xs uppercase bg-blue-500 text-white">
+                    <tr>
+                      <th className="px-6 py-3">ID</th>
+                      <th className="px-6 py-3">Color</th>
+                      <th className="px-6 py-3">N° Chasis</th>
+                      <th className="px-6 py-3">Descripción</th>
+                      <th className="px-6 py-3">Placa</th>
+                      <th className="px-6 py-3">Monto/Día</th>
+                      <th className="px-6 py-3">Tipo Combustible</th>
+                      <th className="px-6 py-3">Modelo</th>
+                      <th className="px-6 py-3">Tipo Vehículo</th>
+                      <th className="px-6 py-3">Estado</th>
                     </tr>
-                  ))
-              ) : (
-                <tr className="bg-white">
-                  <td
-                    colSpan="10"
-                    className="px-6 py-4 text-center text-gray-500"
+                  </thead>
+                  <tbody>
+                    {vehiculosFiltrados.map((v, idx) => (
+                      <tr
+                        key={v.id}
+                        onClick={() => setVehiculoSeleccionado(v)}
+                        className={`cursor-pointer border-b ${
+                          vehiculoSeleccionado?.id === v.id
+                            ? "bg-yellow-100"
+                            : idx % 2 === 0
+                            ? "bg-blue-50"
+                            : "bg-blue-100"
+                        }`}
+                      >
+                        <td className="px-6 py-4 font-semibold text-blue-900">
+                          {v.id}
+                        </td>
+                        <td className="px-6 py-4">{v.color}</td>
+                        <td className="px-6 py-4">{v.noChasis}</td>
+                        <td className="px-6 py-4">{v.descripcion}</td>
+                        <td className="px-6 py-4">{v.noPlaca}</td>
+                        <td className="px-6 py-4">{v.montoPorDia}</td>
+                        <td className="px-6 py-4">{v.tipoCombustibleId}</td>
+                        <td className="px-6 py-4">{v.modeloId}</td>
+                        <td className="px-6 py-4">{v.tipoVehiculoId}</td>
+                        <td className="px-6 py-4">{v.estadoId}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="mx-auto h-24 w-24 text-gray-400 mb-4">
+                  <Car className="h-full w-full" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  No hay vehículos registrados
+                </h3>
+                <p className="text-gray-500 mb-6">
+                  {searchTerm
+                    ? "No se encontraron vehículos con el término de búsqueda"
+                    : "Comienza agregando un nuevo vehículo al sistema"}
+                </p>
+                {!searchTerm && (
+                  <button
+                    onClick={handleCrear}
+                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    No hay vehículos disponibles
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                    <Plus className="h-4 w-4" />
+                    Agregar Primer Vehículo
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Layout>

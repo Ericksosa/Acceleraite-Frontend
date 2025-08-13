@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ListaRolesComponentes from './pages/ListaRolesComponentes';
-import TemporalHome from './components/Home';
+import Home from './components/Home';
 import ListaTipoVehiculosComponentes from './pages/ListaTipoVehiculosComponentes';
 import ListaMarcasComponentes from './pages/ListaMarcasComponentes';
 import ListaModelosComponentes from './pages/ListaModelosComponentes';
@@ -28,12 +28,13 @@ import CrearVehiculo from './pages/vehiculos/CrearVehiculo';
 import EditarVehiculo from './pages/vehiculos/EditarVehiculo';
 import CrearReserva from './pages/reservas/CrearReserva';
 import EditarReserva from './pages/reservas/EditarReserva';
+import VehículosDisponibles from './pages/VehiculosDisponibles';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<TemporalHome />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/roles" element={<ListaRolesComponentes />} />
@@ -61,7 +62,7 @@ function App() {
         <Route path="/reservas" element={<ListaReservasComponentes />} />
         <Route path="/reservas/crear" element={<CrearReserva />} />
         <Route path="/reservas/editar/:id" element={<EditarReserva />} />
-
+        <Route path="/vehiculos/disponibles" element={<VehículosDisponibles />} />
 
       </Routes>
     </Router>
