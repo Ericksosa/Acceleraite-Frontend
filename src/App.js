@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ListaRolesComponentes from './pages/ListaRolesComponentes';
-import TemporalHome from './components/Home';
+import TemporalHome from './components/Home.jsx';
 import ListaTipoVehiculosComponentes from './pages/ListaTipoVehiculosComponentes';
 import ListaMarcasComponentes from './pages/ListaMarcasComponentes';
 import ListaModelosComponentes from './pages/ListaModelosComponentes';
@@ -33,7 +33,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<TemporalHome />} />
+        <Route path="/" element={<HomeCliente />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/roles" element={<ListaRolesComponentes />} />
@@ -58,10 +58,10 @@ function App() {
         <Route path="/vehiculos" element={<ListaVehiculosComponentes />} />
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
+        <Route path="/admin/dashboard" element={<TemporalHome />} />
         <Route path="/reservas" element={<ListaReservasComponentes />} />
         <Route path="/reservas/crear" element={<CrearReserva />} />
         <Route path="/reservas/editar/:id" element={<EditarReserva />} />
-
 
       </Routes>
     </Router>

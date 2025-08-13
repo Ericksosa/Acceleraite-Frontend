@@ -109,8 +109,6 @@ const ListaVehiculos = () => {
             <thead className="text-xs uppercase bg-blue-500 text-white">
               <tr>
                 <th className="px-6 py-3">ID</th>
-                <th className="px-6 py-3">Color</th>
-                <th className="px-6 py-3">Número de chasis</th>
                 <th className="px-6 py-3">Descripción</th>
                 <th className="px-6 py-3">Placa</th>
                 <th className="px-6 py-3">Monto/Día</th>

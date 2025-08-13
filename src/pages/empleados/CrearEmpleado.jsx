@@ -1,12 +1,25 @@
+import { Pause } from "lucide-react";
 import FormularioEmpleado from "../../components/FormularioEmpleado";
 import { crearEmpleado } from "../../services/EmpleadosServices";
 import { useNavigate } from "react-router-dom";
 
 const CrearEmpleado = () => {
   const navigate = useNavigate();
-
+ 
+  // Funcion para manejar el envio de datos al crear un empleado
   const handleSubmit = async (empleado) => {
-    await crearEmpleado(empleado);
+    const payload = {
+      nombre: empleado.nombre, //Le falta los datos a cargar, basicamente habia una funcion sin parametros para enviar.
+      apellido: empleado.apellido,
+      cedula: empleado.cedula,  
+      fechaIngreso: empleado.fechaIngreso,
+      porcientoComision: parseFloat(empleado.porcientoComision),
+      tandaLabor: empleado.tandaLabor,
+      estadoId: parseInt(empleado.estadoId),
+      usuarioId: parseInt(empleado.usuarioId),
+    }
+
+    await crearEmpleado(payload);
     navigate("/empleados");
   };
 
