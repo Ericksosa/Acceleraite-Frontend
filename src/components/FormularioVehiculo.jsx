@@ -23,48 +23,41 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const datosFinales = {
-      ...formData,
-      estadoId: parseInt(formData.estadoId, 10) || null,
-    };
-    onSubmit(datosFinales);
+    onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mb-8">
       <div className="grid grid-cols-2 gap-4">
-         <input
+        <input
           name="descripcion"
           placeholder="Descripción"
           value={formData.descripcion}
           onChange={handleChange}
           className="border p-2 rounded"
-         />
-            
-         <input
+        />
+        <input
           name="noChasis"
-          placeholder="noChasis"
+          placeholder="No. Chasis"
           value={formData.noChasis}
           onChange={handleChange}
           className="border p-2 rounded"
         />
-            
         <input
           name="noMotor"
-          placeholder="NoMotor"
+          placeholder="No. Motor"
           value={formData.noMotor}
           onChange={handleChange}
           className="border p-2 rounded"
         />
-         <input
+        <input
           name="noPlaca"
-          placeholder="noPlaca"
+          placeholder="No. Placa"
           value={formData.noPlaca}
           onChange={handleChange}
           className="border p-2 rounded"
         />
-         <input
+        <input
           name="color"
           placeholder="Color"
           value={formData.color}
@@ -85,10 +78,9 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
           onChange={handleChange}
           className="border p-2 rounded"
         />
-                    
         <input
           name="modeloId"
-          placeholder="modeloId"
+          placeholder="Modelo ID"
           value={formData.modeloId}
           onChange={handleChange}
           className="border p-2 rounded"
@@ -102,13 +94,12 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
         />
         <input
           name="estadoId"
-          placeholder="Estado"
+          placeholder="Estado ID"
           value={formData.estadoId}
           onChange={handleChange}
           className="border p-2 rounded"
         />
       </div>
-
       <div className="flex justify-end gap-4 mt-6">
         <button
           type="button"
@@ -117,8 +108,6 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
         >
           Cancelar
         </button>
-
-
         <button
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"

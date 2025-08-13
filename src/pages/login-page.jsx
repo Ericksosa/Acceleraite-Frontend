@@ -38,7 +38,11 @@ const LoginPage = () => {
       localStorage.setItem("usuario", JSON.stringify(usuario));
 
       // Redirige al dashboard (o la vista que tú tengas)
-      navigate("/"); // Cambia esta ruta si es diferente
+      if (usuario.rolNombre === "cliente" || usuario.rolId === 2 ){
+         navigate("/");
+      }else{
+        navigate("/admin/dashboard");
+      }
     } catch (error) {
       setError("Correo o contraseña incorrectos.");
     } finally {
