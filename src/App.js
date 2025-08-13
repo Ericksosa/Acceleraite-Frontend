@@ -11,6 +11,7 @@ import CrearTipoCombustible from './pages/tipo-combustible/CrearTipoCombustible'
 import EditarTipoCombustible from './pages/tipo-combustible/EditarTipoCombustible';
 import ListaUsuarioComponentes from './pages/ListaUsuarioComponentes';
 import ListaVehiculosComponentes from './pages/ListaVehiculosComponentes';
+import ListaReservasComponentes from './pages/ListaReservasComponentes';
 import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
 import CrearUsuario from './pages/usuario/CrearUsuario';
@@ -25,6 +26,9 @@ import CrearModelos from './pages/modelos/CrearModelos';
 import EditarModelos from './pages/modelos/EditarModelos';
 import CrearVehiculo from './pages/vehiculos/CrearVehiculo';
 import EditarVehiculo from './pages/vehiculos/EditarVehiculo';
+import CrearReserva from './pages/reservas/CrearReserva';
+import EditarReserva from './pages/reservas/EditarReserva';
+
 
 
 
@@ -57,6 +61,9 @@ function App() {
         <Route path="/vehiculos" element={<ListaVehiculosComponentes />} />
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
+        <Route path="/reservas" element={<ListaReservasComponentes />} />
+        <Route path="/reservas/crear" element={<CrearReserva />} />
+        <Route path="/reservas/editar/:id" element={<EditarReserva />} />
       </Routes>
     </Router>
   );

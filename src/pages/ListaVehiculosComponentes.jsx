@@ -104,6 +104,7 @@ const ListaVehiculos = () => {
                 <th className="px-6 py-3">Motor</th>
                 <th className="px-6 py-3">Placa</th>
                 <th className="px-6 py-3">Color</th>
+                <th className="px-6 py-3">Monto/Día</th>
                 <th className="px-6 py-3">Tipo Combustible</th>
                 <th className="px-6 py-3">Modelo</th>
                 <th className="px-6 py-3">Tipo Vehículo</th>
@@ -132,6 +133,7 @@ const ListaVehiculos = () => {
                       <td className="px-6 py-4">{vehiculo.noMotor}</td>
                       <td className="px-6 py-4">{vehiculo.noPlaca}</td>
                       <td className="px-6 py-4">{vehiculo.color}</td>
+                      <td className="px-6 py-4">{vehiculo.montoPorDia}</td>
                       <td className="px-6 py-4">{vehiculo.tipoCombustibleId}</td>
                       <td className="px-6 py-4">{vehiculo.modeloId}</td>
                       <td className="px-6 py-4">{vehiculo.tipoVehiculoId}</td>

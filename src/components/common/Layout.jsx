@@ -15,6 +15,7 @@ const Layout = ({ children }) => {
     { label: "Marcas", to: "/marcas" },
     { label: "Modelos", to: "/modelos" },
     { label: "Vehículos", to: "/vehiculos" },
+    { label: "Reservas", to: "/reservas" },
   ];
 
   const handleLinkClick = () => {
