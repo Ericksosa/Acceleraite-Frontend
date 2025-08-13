@@ -14,7 +14,7 @@ import {
 } from "../services/VehiculoServices";
 
 const ListaVehiculos = () => {
-  // Hooks al nivel superior
+  // estado local
   const [vehiculos, setVehiculos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -22,7 +22,7 @@ const ListaVehiculos = () => {
 
   useTitle("Vehículos");
 
-  // Fetch de vehículos al montar
+  // cargar la lista al montar
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
@@ -35,7 +35,7 @@ const ListaVehiculos = () => {
     fetchVehiculos();
   }, []);
 
-  // Handlers de acciones
+  // acciones principales
   const handleCrear = () => navigate("/vehiculos/crear");
 
   const handleEditar = () => {
@@ -83,7 +83,6 @@ const ListaVehiculos = () => {
     setVehiculoSeleccionado(null);
   };
 
-  // JSX al nivel principal
   return (
     <Layout>
       <h2 className="text-3xl font-bold text-blue-600 mb-6 mt-4 text-center">
@@ -112,10 +111,11 @@ const ListaVehiculos = () => {
                 <th className="px-6 py-3">ID</th>
                 <th className="px-6 py-3">Descripción</th>
                 <th className="px-6 py-3">Placa</th>
-                <th className="px-6 py-3">Estado</th>
+                <th className="px-6 py-3">Monto/Día</th>
+                <th className="px-6 py-3">Tipo Combustible</th>
                 <th className="px-6 py-3">Modelo</th>
-                <th className="px-6 py-3">Combustible</th>
-                <th className="px-6 py-3">Tipo vehículo</th>
+                <th className="px-6 py-3">Tipo Vehículo</th>
+                <th className="px-6 py-3">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -141,16 +141,17 @@ const ListaVehiculos = () => {
                       <td className="px-6 py-4">{v.noChasis}</td>
                       <td className="px-6 py-4">{v.descripcion}</td>
                       <td className="px-6 py-4">{v.noPlaca}</td>
-                      <td className="px-6 py-4">{v.estadoId}</td>
+                      <td className="px-6 py-4">{v.montoPorDia}</td>
+                      <td className="px-6 py-4">{v.tipoCombustibleId}</td>
                       <td className="px-6 py-4">{v.modeloId}</td>
-                      <td className="px-6 py-4">{v.tipocombustibleId}</td>
-                      <td className="px-6 py-4">{v.tipovehiculoId}</td>
+                      <td className="px-6 py-4">{v.tipoVehiculoId}</td>
+                      <td className="px-6 py-4">{v.estadoId}</td>
                     </tr>
                   ))
               ) : (
                 <tr className="bg-white">
                   <td
-                    colSpan="9"
+                    colSpan="10"
                     className="px-6 py-4 text-center text-gray-500"
                   >
                     No hay vehículos disponibles
