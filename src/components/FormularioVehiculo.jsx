@@ -7,6 +7,7 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
     noMotor: "",
     noPlaca: "",
     color: "",
+    montoPorDia: "",
     tipoCombustibleId: "",
     modeloId: "",
     tipoVehiculoId: "",
@@ -67,6 +68,13 @@ const FormularioVehiculo = ({ vehiculoInicial, onSubmit }) => {
           name="color"
           placeholder="Color"
           value={formData.color}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        />
+        <input
+          name="montoPorDia"
+          placeholder="Monto por Día"
+          value={formData.montoPorDia}
           onChange={handleChange}
           className="border p-2 rounded"
         />

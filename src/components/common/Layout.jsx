@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
   const [openGroups, setOpenGroups] = useState({});
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const usuario = localStorage.getItem("usuario");
     setUsuarioAutenticado(!!usuario);
@@ -31,6 +32,7 @@ const Layout = ({ children }) => {
         { label: "Empleados", to: "/empleados" },
         { label: "Usuarios", to: "/usuarios" },
         { label: "Roles", to: "/roles" },
+        { label: "Reservas", to: "/reservas" },
       ],
     },
     {
