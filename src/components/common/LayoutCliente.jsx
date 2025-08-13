@@ -23,9 +23,8 @@ const LayoutCliente = ({ children }) => {
       setUsuarioAutenticado(true);
       setRolUsuario(roleVal);
 
-      // Verificamos que sea cliente (ejemplo rol id 2)
       if (roleVal !== "cliente" && roleVal !== "Cliente" && roleVal !== 2 && roleVal !== "2") {
-        navigate("/", { replace: true }); // Redirige fuera si no es cliente
+        navigate("/", { replace: true });
       }
     } catch (error) {
       setUsuarioAutenticado(false);
@@ -41,8 +40,21 @@ const LayoutCliente = ({ children }) => {
     navigate("/", { replace: true });
   };
 
-  // Solo menú inicio para cliente:
-  const navLinks = [{ label: "Inicio", to: "/" }];
+  // Tu estructura
+  const navGroups = [
+    {
+      title: "Secundaria",
+      links: [{ label: "Inicio", to: "/" }],
+    },
+    {
+      title: "Sobre nosotros",
+      links: [{ label: "Sobre nosotros", to: "/Sobre Nosotros" }],
+    },
+    {
+      title: "Servicios",
+      links: [{ label: "Servicios", to: "/Servicios" }],
+    },
+  ];
 
   const handleLinkClick = () => setIsMenuOpen(false);
 
@@ -68,17 +80,21 @@ const LayoutCliente = ({ children }) => {
 
             {/* Navegación Desktop */}
             <nav className="hidden md:flex items-center space-x-6">
-              {navLinks.map(({ label, to }) => (
-                <NavLink
-                  key={label}
-                  to={to}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium ${isActive ? "text-blue-600" : "text-gray-700"}`
-                  }
-                >
-                  {label}
-                </NavLink>
-              ))}
+              {navGroups.map((group) =>
+                group.links.map(({ label, to }) => (
+                  <NavLink
+                    key={label}
+                    to={to}
+                    className={({ isActive }) =>
+                      `px-3 py-2 rounded-md text-sm font-medium ${
+                        isActive ? "text-blue-600" : "text-gray-700"
+                      }`
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                ))
+              )}
             </nav>
 
             {/* Botones Auth (desktop) */}
@@ -86,7 +102,9 @@ const LayoutCliente = ({ children }) => {
               {!usuarioAutenticado ? (
                 <>
                   <Link to="/login">
-                    <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">Iniciar Sesión</button>
+                    <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">
+                      Iniciar Sesión
+                    </button>
                   </Link>
                   <Link to="/register">
                     <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
@@ -109,28 +127,45 @@ const LayoutCliente = ({ children }) => {
         {/* Menú móvil */}
         {isMenuOpen && (
           <div className="md:hidden border-t bg-white">
-            <div className="px-4 py-3 space-y-1">
-              {navLinks.map(({ label, to }) => (
-                <NavLink
-                  key={label}
-                  to={to}
-                  className={({ isActive }) =>
-                    `block px-3 py-2 rounded ${isActive ? "bg-blue-50" : "text-gray-700"}`
-                  }
-                  onClick={handleLinkClick}
-                >
-                  {label}
-                </NavLink>
+            <div className="px-4 py-3 space-y-3">
+              {navGroups.map((group) => (
+                <div key={group.title}>
+                  <h3 className="text-xs uppercase font-semibold text-gray-500 px-3">
+                    {group.title}
+                  </h3>
+                  {group.links.length > 0 ? (
+                    group.links.map(({ label, to }) => (
+                      <NavLink
+                        key={label}
+                        to={to}
+                        className={({ isActive }) =>
+                          `block px-3 py-2 rounded ${
+                            isActive ? "bg-blue-50" : "text-gray-700"
+                          }`
+                        }
+                        onClick={handleLinkClick}
+                      >
+                        {label}
+                      </NavLink>
+                    ))
+                  ) : (
+                    <p className="px-3 py-1 text-gray-400 text-sm">Próximamente</p>
+                  )}
+                </div>
               ))}
 
               <div className="pt-2">
                 {!usuarioAutenticado ? (
                   <>
                     <Link to="/login">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">Iniciar Sesión</button>
+                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">
+                        Iniciar Sesión
+                      </button>
                     </Link>
                     <Link to="/register">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">Registrarse</button>
+                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">
+                        Registrarse
+                      </button>
                     </Link>
                   </>
                 ) : (
