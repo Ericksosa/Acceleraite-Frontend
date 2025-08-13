@@ -16,8 +16,8 @@ import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
 import CrearUsuario from './pages/usuario/CrearUsuario';
 import EditarUsuario from './pages/usuario/EditarUsuario';
-import CrearTipoVehiculo from './pages/tipovehiculos/CrearTipoVehiculo';
-import EditarTipoVehiculo from './pages/tipovehiculos/EditarTipoVehiculo';
+import CrearTipoVehiculo from './pages/tipo-vehiculos/CrearTipoVehiculo';
+import EditarTipoVehiculo from './pages/tipo-vehiculos/EditarTipoVehiculo';
 import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page';
 import CrearMarca from './pages/marcas/CrearMarca';
@@ -28,9 +28,6 @@ import CrearVehiculo from './pages/vehiculos/CrearVehiculo';
 import EditarVehiculo from './pages/vehiculos/EditarVehiculo';
 import CrearReserva from './pages/reservas/CrearReserva';
 import EditarReserva from './pages/reservas/EditarReserva';
-
-
-
 
 function App() {
   return (
@@ -64,6 +61,8 @@ function App() {
         <Route path="/reservas" element={<ListaReservasComponentes />} />
         <Route path="/reservas/crear" element={<CrearReserva />} />
         <Route path="/reservas/editar/:id" element={<EditarReserva />} />
+
+
       </Routes>
     </Router>
   );

@@ -23,7 +23,6 @@ const ListaTipoCombustible = () => {
 
   useEffect(() => {
     cargarTipoCombustible();
-
   }, []);
 
   const cargarTipoCombustible = async () => {
@@ -108,7 +107,7 @@ const ListaTipoCombustible = () => {
             <tbody>
               {TipoCombustibles.length > 0 ? (
                 TipoCombustibles
-                .filter((TipoCombustible) => TipoCombustible.estadoId === 1)
+                .filter((TipoCombustible) => TipoCombustible.estadoNombre === 'Activo')
                 .map((TipoCombustible, index) => (
                   <tr
                     key={TipoCombustible.id}
@@ -124,7 +123,7 @@ const ListaTipoCombustible = () => {
                     <td className="px-6 py-4 font-semibold text-blue-900">{TipoCombustible.id}</td>
                     <td className="px-6 py-4">{TipoCombustible.nombre}</td>
                     <td className="px-6 py-4">{TipoCombustible.descripcion}</td>
-                    <td className="px-6 py-4">{TipoCombustible.estadoId}</td>
+                    <td className="px-6 py-4">{TipoCombustible.estadoNombre}</td>
                   </tr>
                 ))
               ) : (
