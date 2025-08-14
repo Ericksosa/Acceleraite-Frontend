@@ -30,6 +30,8 @@ import HomeCliente from './components/HomeCliente.jsx';
 import SobreNosotros from "./pages/sobre-nosotros/SobreNosotros";
 import CrearReserva from './pages/reservas/CrearReserva';
 import EditarReserva from './pages/reservas/EditarReserva';
+import VehículosDisponibles from './pages/VehiculosDisponibles';
+import HomeCliente from './components/HomeCliente';
 
 function App() {
   return (
@@ -65,6 +67,7 @@ function App() {
         <Route path="/reservas" element={<ListaReservasComponentes />} />
         <Route path="/reservas/crear" element={<CrearReserva />} />
         <Route path="/reservas/editar/:id" element={<EditarReserva />} />
+        <Route path="/vehiculos/disponibles" element={<VehículosDisponibles />} />
 
       </Routes>
     </Router>

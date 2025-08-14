@@ -1,54 +1,25 @@
-import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
-  const [rolUsuario, setRolUsuario] = useState(null);
   const [openGroups, setOpenGroups] = useState({});
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    const usuarioStr = localStorage.getItem("usuario");
-    if (!usuarioStr) {
-      setUsuarioAutenticado(false);
-      setRolUsuario(null);
-      navigate("/", { replace: true });
-      return;
-    }
-
-    try {
-      const userObj = JSON.parse(usuarioStr);
-      const roleVal = userObj?.rolNombre || userObj?.rol || userObj?.role || "";
-      setUsuarioAutenticado(true);
-      setRolUsuario(roleVal);
-
-      const roleNormalized = String(roleVal).toLowerCase();
-      const isAdmin =
-        roleNormalized.includes("admin") ||
-        roleNormalized.includes("administrador") ||
-        roleNormalized.includes("administrator");
-
-      if (!isAdmin) {
-        // si no es admin, lo mandamos al home público (cliente)
-        navigate("/", { replace: true });
-      }
-    } catch (error) {
-      setUsuarioAutenticado(false);
-      setRolUsuario(null);
-      navigate("/login", { replace: true });
-    }
-  }, [navigate]);
+    const usuario = localStorage.getItem("usuario");
+    setUsuarioAutenticado(!!usuario);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("usuario");
     setUsuarioAutenticado(false);
-    setRolUsuario(null);
-    navigate("/", { replace: true });
+    navigate("/");
   };
 
+  // Rutas agrupadas por "tipo"
   const navGroups = [
     {
       title: "Principal",
@@ -75,44 +46,50 @@ const Layout = ({ children }) => {
     },
   ];
 
-  const toggleGroup = (title) => {
-    setOpenGroups((prev) => ({ ...prev, [title]: !prev[title] }));
-  };
-
   const handleLinkClick = () => {
     setIsMenuOpen(false);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white shadow-sm sticky top-0 z-50">
+  const toggleGroup = (title) => {
+    setOpenGroups((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
+    return (
+    <div className="min-h-screen relative isolate flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50">
+      {/* Decorative background (sutil y no intrusivo) */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-28 -right-24 w-72 h-72 rounded-full bg-sky-300/20 blur-3xl animate-blob" />
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-indigo-300/15 blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute top-1/3 left-1/4 w-64 h-64 rounded-full bg-cyan-300/15 blur-3xl animate-blob animation-delay-4000" />
+      </div>
+
+      {/* Navbar de Escritorio */}
+      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl ring-1 ring-white/60 shadow-lg shadow-sky-100/40">
+        {/* Divider inferior con gradiente suave */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/admin/dashboard" className="flex items-center">
-              <img src="/1.png" alt="Accelerilate" className="h-12 w-auto mr-3" />
+            <Link to="/" className="flex items-center group">
+              <img
+                src="/1.png"
+                alt="Accelerilate"
+                className="h-12 w-auto mr-3 transition-transform duration-200 group-hover:scale-105"
+              />
             </Link>
 
-            {/* Botón móvil */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen((s) => !s)}
-                aria-label="Abrir menú"
-                className="p-2 rounded-md"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-
             {/* Navegación Desktop */}
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center gap-2">
               {navGroups.map((group) => (
                 <div key={group.title} className="relative">
                   {group.links.length > 1 ? (
                     <>
                       <button
                         onClick={() => toggleGroup(group.title)}
-                        className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 flex items-center"
+                        className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-sky-700 hover:bg-sky-50 transition flex items-center"
                       >
                         {group.title}
                         <svg
@@ -123,19 +100,22 @@ const Layout = ({ children }) => {
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
                         </svg>
                       </button>
 
                       {openGroups[group.title] && (
-                        <div className="absolute mt-2 bg-white shadow-lg rounded-md py-2 w-48 border">
+                        <div className="absolute mt-2 right-0 bg-white/90 backdrop-blur-xl shadow-xl rounded-xl py-2 w-52 border border-slate-200/60 ring-1 ring-white/60">
                           {group.links.map(({ label, to }) => (
                             <NavLink
                               key={label}
                               to={to}
-                              className={({ isActive }) =>
-                                `block px-4 py-2 text-sm ${isActive ? "bg-blue-50" : "text-gray-700"}`
-                              }
+                              className="block px-4 py-2 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition rounded-md"
                               onClick={handleLinkClick}
                             >
                               {label}
@@ -147,9 +127,7 @@ const Layout = ({ children }) => {
                   ) : (
                     <NavLink
                       to={group.links[0].to}
-                      className={({ isActive }) =>
-                        `px-3 py-2 rounded-md text-sm font-medium ${isActive ? "text-blue-600" : "text-gray-700"}`
-                      }
+                      className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-sky-700 hover:bg-sky-50 transition"
                     >
                       {group.links[0].label}
                     </NavLink>
@@ -158,72 +136,60 @@ const Layout = ({ children }) => {
               ))}
             </nav>
 
-            {/* Botones Auth (desktop) */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Botones de Autenticación */}
+            <div className="hidden md:flex items-center space-x-3">
               {!usuarioAutenticado ? (
                 <>
                   <Link to="/login">
-                    <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">Iniciar Sesión</button>
+                    <button className="text-sm px-4 py-2 rounded-lg text-slate-700 hover:text-sky-700 hover:bg-sky-50 transition ring-1 ring-slate-200">
+                      Iniciar Sesión
+                    </button>
                   </Link>
                   <Link to="/register">
-                    <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
+                    <button className="text-sm text-white px-4 py-2 rounded-lg bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition">
                       Registrarse
                     </button>
                   </Link>
                 </>
               ) : (
-                <button onClick={handleLogout} className="text-sm bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-white px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 shadow-sm hover:shadow transition"
+                >
                   Cerrar Sesión
                 </button>
               )}
             </div>
           </div>
         </div>
-
-        {/* Menú móvil (drawer) */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t bg-white">
-            <div className="px-4 py-3 space-y-1">
-              {navGroups.map((group) =>
-                group.links.map(({ label, to }) => (
-                  <NavLink
-                    key={label}
-                    to={to}
-                    className={({ isActive }) => `block px-3 py-2 rounded ${isActive ? "bg-blue-50" : "text-gray-700"}`}
-                    onClick={handleLinkClick}
-                  >
-                    {label}
-                  </NavLink>
-                ))
-              )}
-
-              <div className="pt-2">
-                {!usuarioAutenticado ? (
-                  <>
-                    <Link to="/login">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">Iniciar Sesión</button>
-                    </Link>
-                    <Link to="/register">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">Registrarse</button>
-                    </Link>
-                  </>
-                ) : (
-                  <button onClick={handleLogout} className="w-full text-left px-3 py-2 rounded bg-red-600 text-white">
-                    Cerrar Sesión
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Contenido principal */}
-      <main className="flex-grow px-4 sm:px-6 lg:px-8 py-6">{children}</main>
+      {/* Contenido Principal */}
+      <main className="flex-grow">
+        {/* Contenedor con padding coherente al hero */}
+        <div className="px-4 sm:px-6 lg:px-8 py-6">{children}</div>
+      </main>
 
-      <footer className="bg-white text-gray-700 text-center py-4 border-t border-blue-200 text-sm">
-        © {new Date().getFullYear()} Accelerilate. Todos los derechos reservados.
+      {/* Footer */}
+      <footer className="relative bg-white/70 backdrop-blur-xl text-slate-700 text-center py-4 ring-1 ring-white/60">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
+        <p className="text-sm">
+          © {new Date().getFullYear()} Accelerilate. Todos los derechos reservados.
+        </p>
       </footer>
+
+      {/* Animaciones */}
+      <style jsx>{`
+        @keyframes blob {
+          0% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(24px, -30px) scale(1.04); }
+          66% { transform: translate(-18px, 22px) scale(0.96); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
+        .animate-blob { animation: blob 14s infinite ease-in-out; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+      `}</style>
     </div>
   );
 };
