@@ -9,6 +9,7 @@ const Layout = ({ children }) => {
   const [openGroups, setOpenGroups] = useState({});
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const usuarioStr = localStorage.getItem("usuario");
     if (!usuarioStr) {
@@ -59,6 +60,7 @@ const Layout = ({ children }) => {
         { label: "Empleados", to: "/empleados" },
         { label: "Usuarios", to: "/usuarios" },
         { label: "Roles", to: "/roles" },
+        { label: "Reservas", to: "/reservas" },
       ],
     },
     {

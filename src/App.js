@@ -11,6 +11,7 @@ import CrearTipoCombustible from './pages/tipo-combustible/CrearTipoCombustible'
 import EditarTipoCombustible from './pages/tipo-combustible/EditarTipoCombustible';
 import ListaUsuarioComponentes from './pages/ListaUsuarioComponentes';
 import ListaVehiculosComponentes from './pages/ListaVehiculosComponentes';
+import ListaReservasComponentes from './pages/ListaReservasComponentes';
 import CrearEmpleado from './pages/empleados/CrearEmpleado';
 import EditarEmpleado from './pages/empleados/EditarEmpleado';
 import CrearUsuario from './pages/usuario/CrearUsuario';
@@ -27,6 +28,8 @@ import EditarVehiculo from './pages/vehiculos/EditarVehiculo.jsx';
 import CrearVehiculo from './pages/vehiculos/CrearVehiculo.jsx';
 import HomeCliente from './components/HomeCliente.jsx';
 import SobreNosotros from "./pages/sobre-nosotros/SobreNosotros";
+import CrearReserva from './pages/reservas/CrearReserva';
+import EditarReserva from './pages/reservas/EditarReserva';
 
 function App() {
   return (
@@ -59,6 +62,10 @@ function App() {
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
         <Route path="/admin/dashboard" element={<TemporalHome />} />
         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
+        <Route path="/reservas" element={<ListaReservasComponentes />} />
+        <Route path="/reservas/crear" element={<CrearReserva />} />
+        <Route path="/reservas/editar/:id" element={<EditarReserva />} />
+
       </Routes>
     </Router>
   );

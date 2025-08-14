@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../components/common/Layout";
 import useTitle from "../hooks/useTitle";
-;
 
 const Home = () => {
   useTitle("Acceleraite - Admin");
