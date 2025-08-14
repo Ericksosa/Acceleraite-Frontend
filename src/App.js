@@ -26,7 +26,7 @@ import EditarModelos from './pages/modelos/EditarModelos';
 import EditarVehiculo from './pages/vehiculos/EditarVehiculo.jsx';
 import CrearVehiculo from './pages/vehiculos/CrearVehiculo.jsx';
 import HomeCliente from './components/HomeCliente.jsx';
-
+import SobreNosotros from "./pages/sobre-nosotros/SobreNosotros";
 
 function App() {
   return (
@@ -58,7 +58,7 @@ function App() {
         <Route path="/vehiculos/crear" element={<CrearVehiculo />} />
         <Route path="/vehiculos/editar/:id" element={<EditarVehiculo />} />
         <Route path="/admin/dashboard" element={<TemporalHome />} />
-
+        <Route path="/sobre-nosotros" element={<SobreNosotros />} />
       </Routes>
     </Router>
   );

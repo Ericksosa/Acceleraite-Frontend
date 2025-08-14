@@ -9,6 +9,13 @@ const LayoutCliente = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    // Si está en /sobre-nosotros no hacemos validación de login ni rol
+    if (currentPath === "/sobre-nosotros") {
+      return;
+    }
+
     const usuarioStr = localStorage.getItem("usuario");
     if (!usuarioStr) {
       setUsuarioAutenticado(false);
@@ -19,11 +26,17 @@ const LayoutCliente = ({ children }) => {
 
     try {
       const userObj = JSON.parse(usuarioStr);
-      const roleVal = userObj?.rolNombre || userObj?.rol || userObj?.role || "";
+      const roleVal =
+        userObj?.rolNombre || userObj?.rol || userObj?.role || "";
       setUsuarioAutenticado(true);
       setRolUsuario(roleVal);
 
-      if (roleVal !== "cliente" && roleVal !== "Cliente" && roleVal !== 2 && roleVal !== "2") {
+      if (
+        roleVal !== "cliente" &&
+        roleVal !== "Cliente" &&
+        roleVal !== 2 &&
+        roleVal !== "2"
+      ) {
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -40,15 +53,13 @@ const LayoutCliente = ({ children }) => {
     navigate("/", { replace: true });
   };
 
-  // Tu estructura
   const navGroups = [
     {
       title: "Secundaria",
       links: [{ label: "Inicio", to: "/" }],
     },
     {
-      title: "Sobre nosotros",
-      links: [{ label: "Sobre nosotros", to: "/Sobre Nosotros" }],
+      links: [{ label: "Sobre nosotros", to: "/sobre-nosotros" }],
     },
     {
       title: "Servicios",
