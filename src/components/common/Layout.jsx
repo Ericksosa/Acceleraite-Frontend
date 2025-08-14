@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
   const navGroups = [
     {
       title: "Principal",
-      links: [{ label: "Inicio", to: "/" }],
+      links: [{ label: "Inicio", to: "/admin/dashboard" }],
     },
     {
       title: "Gestión de Usuarios",
