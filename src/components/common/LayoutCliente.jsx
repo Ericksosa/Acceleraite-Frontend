@@ -23,7 +23,12 @@ const LayoutCliente = ({ children }) => {
       setUsuarioAutenticado(true);
       setRolUsuario(roleVal);
 
-      if (roleVal !== "cliente" && roleVal !== "Cliente" && roleVal !== 2 && roleVal !== "2") {
+      if (
+        roleVal !== "cliente" &&
+        roleVal !== "Cliente" &&
+        roleVal !== 2 &&
+        roleVal !== "2"
+      ) {
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -59,37 +64,37 @@ const LayoutCliente = ({ children }) => {
   const handleLinkClick = () => setIsMenuOpen(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white shadow-sm sticky top-0 z-50">
+    <div className="min-h-screen relative isolate flex flex-col bg-gradient-to-br from-slate-50 via-white to-sky-50">
+      {/* Decorative background (sutil y no intrusivo) */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-28 -right-24 w-72 h-72 rounded-full bg-sky-300/20 blur-3xl animate-blob" />
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-indigo-300/15 blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute top-1/3 left-1/4 w-64 h-64 rounded-full bg-cyan-300/15 blur-3xl animate-blob animation-delay-4000" />
+      </div>
+
+      {/* Navbar de Escritorio */}
+      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl ring-1 ring-white/60 shadow-lg shadow-sky-100/40">
+        {/* Divider inferior con gradiente suave */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center">
-              <img src="/1.png" alt="Accelerilate" className="h-12 w-auto mr-3" />
+            {/* Logo */}
+            <Link to="/" className="flex items-center group">
+              <img
+                src="/1.png"
+                alt="Accelerilate"
+                className="h-12 w-auto mr-3 transition-transform duration-200 group-hover:scale-105"
+              />
             </Link>
-
-            {/* Botón móvil */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen((s) => !s)}
-                aria-label="Abrir menú"
-                className="p-2 rounded-md"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-
-            {/* Navegación Desktop */}
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center gap-2">
               {navGroups.map((group) =>
                 group.links.map(({ label, to }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className={({ isActive }) =>
-                      `px-3 py-2 rounded-md text-sm font-medium ${
-                        isActive ? "text-blue-600" : "text-gray-700"
-                      }`
-                    }
+                    className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700
+                   hover:text-sky-700 hover:bg-sky-50 transition"
+                    onClick={handleLinkClick}
                   >
                     {label}
                   </NavLink>
@@ -97,17 +102,17 @@ const LayoutCliente = ({ children }) => {
               )}
             </nav>
 
-            {/* Botones Auth (desktop) */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Botones de Autenticación */}
+            <div className="hidden md:flex items-center space-x-3">
               {!usuarioAutenticado ? (
                 <>
                   <Link to="/login">
-                    <button className="text-sm px-4 py-2 rounded hover:bg-gray-100 transition">
+                    <button className="text-sm px-4 py-2 rounded-lg text-slate-700 hover:text-sky-700 hover:bg-sky-50 transition ring-1 ring-slate-200">
                       Iniciar Sesión
                     </button>
                   </Link>
                   <Link to="/register">
-                    <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition">
+                    <button className="text-sm text-white px-4 py-2 rounded-lg bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition">
                       Registrarse
                     </button>
                   </Link>
@@ -115,7 +120,7 @@ const LayoutCliente = ({ children }) => {
               ) : (
                 <button
                   onClick={handleLogout}
-                  className="text-sm bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                  className="text-sm text-white px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 shadow-sm hover:shadow transition"
                 >
                   Cerrar Sesión
                 </button>
@@ -123,70 +128,49 @@ const LayoutCliente = ({ children }) => {
             </div>
           </div>
         </div>
-
-        {/* Menú móvil */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t bg-white">
-            <div className="px-4 py-3 space-y-3">
-              {navGroups.map((group) => (
-                <div key={group.title}>
-                  <h3 className="text-xs uppercase font-semibold text-gray-500 px-3">
-                    {group.title}
-                  </h3>
-                  {group.links.length > 0 ? (
-                    group.links.map(({ label, to }) => (
-                      <NavLink
-                        key={label}
-                        to={to}
-                        className={({ isActive }) =>
-                          `block px-3 py-2 rounded ${
-                            isActive ? "bg-blue-50" : "text-gray-700"
-                          }`
-                        }
-                        onClick={handleLinkClick}
-                      >
-                        {label}
-                      </NavLink>
-                    ))
-                  ) : (
-                    <p className="px-3 py-1 text-gray-400 text-sm">Próximamente</p>
-                  )}
-                </div>
-              ))}
-
-              <div className="pt-2">
-                {!usuarioAutenticado ? (
-                  <>
-                    <Link to="/login">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">
-                        Iniciar Sesión
-                      </button>
-                    </Link>
-                    <Link to="/register">
-                      <button className="w-full text-left px-3 py-2 rounded hover:bg-gray-100">
-                        Registrarse
-                      </button>
-                    </Link>
-                  </>
-                ) : (
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-3 py-2 rounded bg-red-600 text-white"
-                  >
-                    Cerrar Sesión
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </header>
 
-      <main className="flex-grow px-4 sm:px-6 lg:px-8 py-6">{children}</main>
+      {/* Contenido Principal */}
+      <main className="flex-grow">
+        {/* Contenedor con padding coherente al hero */}
+        <div className="px-4 sm:px-6 lg:px-8 py-6">{children}</div>
+      </main>
 
-      <footer className="bg-white text-gray-700 text-center py-4 border-t border-blue-200 text-sm">
-        © {new Date().getFullYear()} Accelerilate. Todos los derechos reservados.
+      {/* Footer */}
+      <footer className="relative bg-white/70 backdrop-blur-xl text-slate-700 text-center py-4 ring-1 ring-white/60">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
+        <p className="text-sm">
+          © {new Date().getFullYear()} Accelerilate. Todos los derechos
+          reservados.
+        </p>
       </footer>
+
+      {/* Animaciones */}
+      <style jsx>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0, 0) scale(1);
+          }
+          33% {
+            transform: translate(24px, -30px) scale(1.04);
+          }
+          66% {
+            transform: translate(-18px, 22px) scale(0.96);
+          }
+          100% {
+            transform: translate(0, 0) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 14s infinite ease-in-out;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </div>
   );
 };

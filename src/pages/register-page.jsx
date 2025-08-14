@@ -1,11 +1,11 @@
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react"
+import { useState } from "react";
 
-export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,176 +15,255 @@ export default function RegisterPage() {
     confirmPassword: "",
     acceptTerms: false,
     acceptMarketing: false,
-  })
+  });
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden")
-      return
+      alert("Las contraseñas no coinciden");
+      return;
     }
 
     if (!formData.acceptTerms) {
-      alert("Debes aceptar los términos y condiciones")
-      return
+      alert("Debes aceptar los términos y condiciones");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    console.log("Register attempt:", formData)
-    setIsLoading(false)
-  }
+    console.log("Register attempt:", formData);
+    setIsLoading(false);
+  };
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-    }))
-  }
+    }));
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to ="/" className="ml-4 text-gray-700 hover:text-blue-600 font-medium transition-colors"
-            > 
-            <img
-            src="/1.png"
-            alt="Accelerilate"                          
-            className="h-16 w-auto mr-2"
-            />
-            </Link>
-            <Link to="/" className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver al inicio
-            </Link>
-          </div>
-        </div>
+    <section className="relative overflow-hidden bg-gradient-to-r from-sky-700 via-blue-700 to-indigo-700 text-white min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="absolute top-0 left-0 w-full bg-transparent p-4 flex justify-between items-center z-10">
+        <Link
+          to="/"
+          className="flex items-center text-white hover:text-sky-200 transition"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Volver al inicio
+        </Link>
       </header>
 
-      <div className="flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
-            <p className="text-gray-600">Únete a RentCar y comienza tu aventura</p>
+      {/* Figuras decorativas */}
+      <div className="absolute -right-20 -top-20 opacity-20 w-96 h-96 rounded-full bg-white blur-3xl rotate-45" />
+      <div className="absolute -left-32 bottom-0 opacity-10 w-72 h-72 rounded-full bg-white blur-2xl" />
+
+      {/* Contenido */}
+      <div className="flex-grow flex items-center justify-center px-6 pt-20">
+        <div className="relative bg-white/95 text-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-md w-full max-w-md">
+          {/* Encabezado */}
+          <div className="text-center mb-6">
+            <div className="mx-auto w-16 h-16 bg-gradient-to-r from-sky-700 to-indigo-700 rounded-full flex items-center justify-center mb-4 shadow-lg">
+              <User className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold text-slate-900">Crear Cuenta</h1>
+            <p className="text-sm text-slate-600 mt-1">
+              Únete a RentCar y comienza tu aventura
+            </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-xl p-6">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-semibold">Registro</h2>
-              <p className="text-gray-500">Completa la información para crear tu cuenta</p>
+          {/* Formulario */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-slate-700">
+                  Nombre
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    placeholder="Juan"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-slate-700">
+                  Apellido
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full py-3 px-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  placeholder="Pérez"
+                />
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">Nombre</label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="pl-10 w-full py-2 px-3 border rounded" placeholder="Juan" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Apellido</label>
-                  <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full py-2 px-3 border rounded" placeholder="Pérez" />
-                </div>
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-slate-700">
+                Correo Electrónico
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  placeholder="tu@email.com"
+                />
               </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required className="pl-10 w-full py-2 px-3 border rounded" placeholder="tu@email.com" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Teléfono</label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required className="pl-10 w-full py-2 px-3 border rounded" placeholder="+1 (555) 123-4567" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <input type={showPassword ? "text" : "password"} id="password" name="password" value={formData.password} onChange={handleInputChange} required minLength={8} className="pl-10 pr-10 w-full py-2 px-3 border rounded" placeholder="Mínimo 8 caracteres" />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-2">
-                    {showPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required className="pl-10 pr-10 w-full py-2 px-3 border rounded" placeholder="Repite tu contraseña" />
-                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-2 top-2">
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex items-start space-x-2">
-                  <input type="checkbox" id="acceptTerms" name="acceptTerms" checked={formData.acceptTerms} onChange={handleInputChange} required className="mt-1" />
-                  <label htmlFor="acceptTerms" className="text-sm text-gray-600 leading-5">
-                    Acepto los <Link href="/terms" className="text-blue-600 hover:text-blue-800">Términos de Servicio</Link> y la <Link href="/privacy" className="text-blue-600 hover:text-blue-800">Política de Privacidad</Link>
-                  </label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <input type="checkbox" id="acceptMarketing" name="acceptMarketing" checked={formData.acceptMarketing} onChange={handleInputChange} className="mt-1" />
-                  <label htmlFor="acceptMarketing" className="text-sm text-gray-600 leading-5">
-                    Quiero recibir ofertas especiales y promociones por email
-                  </label>
-                </div>
-              </div>
-
-              <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700" disabled={isLoading}>
-                {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
-              </button>
-            </form>
-
-            <div className="text-center mt-6">
-              <p className="text-sm text-gray-600">
-                ¿Ya tienes una cuenta? <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">Inicia sesión aquí</Link>
-              </p>
             </div>
-          </div>
+
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-slate-700">
+                Teléfono
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-slate-700">
+                Contraseña
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  minLength={8}
+                  className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  placeholder="Mínimo 8 caracteres"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-slate-500 hover:text-slate-700 transition"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-slate-700">
+                Confirmar Contraseña
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  placeholder="Repite tu contraseña"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-3 text-slate-500 hover:text-slate-700 transition"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  name="acceptTerms"
+                  checked={formData.acceptTerms}
+                  onChange={handleInputChange}
+                  required
+                  className="mt-1"
+                />
+                <label className="text-sm text-slate-600 leading-5">
+                  Acepto los{" "}
+                  <Link to="/terms" className="text-sky-700 hover:underline">
+                    Términos de Servicio
+                  </Link>{" "}
+                  y la{" "}
+                  <Link to="/privacy" className="text-sky-700 hover:underline">
+                    Política de Privacidad
+                  </Link>
+                </label>
+              </div>
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  name="acceptMarketing"
+                  checked={formData.acceptMarketing}
+                  onChange={handleInputChange}
+                  className="mt-1"
+                />
+                <label className="text-sm text-slate-600 leading-5">
+                  Quiero recibir ofertas especiales y promociones por email
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-lg transition shadow disabled:opacity-50"
+            >
+              {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
+            </button>
+
+            <div className="text-sm text-center text-slate-600">
+              ¿Ya tienes una cuenta?{" "}
+              <Link
+                to="/login"
+                className="text-sky-700 font-medium hover:underline"
+              >
+                Inicia sesión aquí
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
-
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -right-32 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
-    </div>
-  )
-}
+    </section>
+  );
+};
+export default RegisterPage;
