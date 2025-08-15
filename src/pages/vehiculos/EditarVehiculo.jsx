@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { editarVehiculo, obtenerVehiculos } from "../../services/VehiculoServices";
+import { actualizarVehiculo, obtenerVehiculos } from "../../services/VehiculoServices";
 import FormularioVehiculo from "../../components/FormularioVehiculo";
 import { Car, ArrowLeft } from "lucide-react";
 
@@ -22,7 +22,7 @@ const EditarVehiculo = () => {
   const handleSubmit = async (datosActualizados) => {
     try {
       setSubmitting(true);
-      await editarVehiculo(id, datosActualizados);
+      await actualizarVehiculo(id, datosActualizados);
       navigate("/vehiculos");
     } finally {
       setSubmitting(false);

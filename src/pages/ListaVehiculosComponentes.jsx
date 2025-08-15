@@ -5,51 +5,120 @@ import FormularioVehiculo from "../components/FormularioVehiculo";
 import Modal from "../components/common/Modal";
 import useTitle from "../hooks/useTitle";
 
+import { obtenerTipoCombustibles } from "../services/TipoCombustibleServices";
+import { obtenerTipoVehiculo } from "../services/TipoVehiculoServices";
+import { obtenerModelos } from "../services/ModelosVehiculosServices";
+import { listaEstados } from "../services/EstadoServices";
 import {
   obtenerVehiculos,
   crearVehiculo,
-  editarVehiculo,
+  actualizarVehiculo,
   eliminarVehiculo,
+  obtenerVehiculosConImagenes,
+  resolverUrlImagenVehiculo,
 } from "../services/VehiculoServices";
 
-
 import { Car, Plus, Edit3, Trash2, Search } from "lucide-react";
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080/api";
 
 const ListaVehiculos = () => {
   const [vehiculos, setVehiculos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [tiposCombustible, setTiposCombustible] = useState([]);
+  const [modelos, setModelos] = useState([]);
+  const [tiposVehiculo, setTiposVehiculo] = useState([]);
+  const [estados, setEstados] = useState([]);
+  const [cargandoDatos, setCargandoDatos] = useState(true);
+
   const navigate = useNavigate();
 
   useTitle("Vehículos");
-
-  // cargar la lista al montar
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
-        const datos = await obtenerVehiculos();
+        setCargandoDatos(true);
+        // Usamos el endpoint que trae multimedia directamente
+        const datos = await obtenerVehiculosConImagenes();
         setVehiculos(datos || []);
       } catch (err) {
-        console.error("Error cargando vehículos:", err);
-        setVehiculos([]);
+        console.error("Error cargando vehículos con imágenes:", err);
+        // fallback: intentar obtener sin imágenes (opcional)
+        try {
+          const datosFallback = await obtenerVehiculos();
+          setVehiculos(datosFallback || []);
+        } catch (fallbackErr) {
+          console.error(
+            "Fallback obtenerVehiculos también falló:",
+            fallbackErr
+          );
+          setVehiculos([]);
+        }
+      } finally {
+        setCargandoDatos(false);
       }
     };
     fetchVehiculos();
   }, []);
 
+  // cargar la lista al montar
+  useEffect(() => {
+    const fetchVehiculos = async () => {
+      try {
+        setCargandoDatos(true);
+        const datos = await obtenerVehiculos();
+        setVehiculos(datos || []);
+      } catch (err) {
+        console.error("Error cargando vehículos:", err);
+        setVehiculos([]);
+      } finally {
+        setCargandoDatos(false);
+      }
+    };
+    fetchVehiculos();
+  }, []);
+
+  const obtenerNombreTipoCombustible = (id) => {
+    const tipo = tiposCombustible.find((t) => t.id === id);
+    return tipo ? tipo.nombre || tipo.descripcion : `ID: ${id}`;
+  };
+
+  const obtenerNombreModelo = (id) => {
+    const modelo = modelos.find((m) => m.id === id);
+    return modelo ? modelo.nombre || modelo.descripcion : `ID: ${id}`;
+  };
+
+  const obtenerNombreTipoVehiculo = (id) => {
+    const tipo = tiposVehiculo.find((t) => t.id === id);
+    return tipo ? tipo.nombre || tipo.descripcion : `ID: ${id}`;
+  };
+
+  const obtenerNombreEstado = (id) => {
+    const estado = estados.find((e) => e.id === id);
+    return estado ? estado.nombre || estado.descripcion : `ID: ${id}`;
+  };
+
   // filtrar por búsqueda (usa searchTerm)
   const vehiculosFiltrados = vehiculos.filter((v) => {
     const term = searchTerm.trim().toLowerCase();
     if (!term) return true;
-    // ajusta campos si tu objeto tiene otras propiedades
+
     return (
       (v.descripcion || "").toLowerCase().includes(term) ||
       (v.noPlaca || "").toLowerCase().includes(term) ||
-      (String(v.id) || "").includes(term)
+      (v.color || "").toLowerCase().includes(term) ||
+      (String(v.id) || "").includes(term) ||
+      obtenerNombreModelo(v.modeloId).toLowerCase().includes(term) ||
+      obtenerNombreTipoCombustible(v.tipoCombustibleId)
+        .toLowerCase()
+        .includes(term) ||
+      obtenerNombreTipoVehiculo(v.tipoVehiculoId)
+        .toLowerCase()
+        .includes(term) ||
+      obtenerNombreEstado(v.estadoId).toLowerCase().includes(term)
     );
   });
-
   // acciones principales
   const handleCrear = () => navigate("/vehiculos/crear");
 
@@ -79,7 +148,7 @@ const ListaVehiculos = () => {
   const handleSubmitFormulario = async (vehiculo) => {
     try {
       if (vehiculoSeleccionado) {
-        await editarVehiculo(vehiculoSeleccionado.id, vehiculo);
+        await actualizarVehiculo(vehiculoSeleccionado.id, vehiculo);
       } else {
         await crearVehiculo(vehiculo);
       }
@@ -220,6 +289,7 @@ const ListaVehiculos = () => {
                   <thead className="text-xs uppercase bg-blue-500 text-white">
                     <tr>
                       <th className="px-6 py-3">ID</th>
+                      <th className="px-6 py-3">Imagen</th>
                       <th className="px-6 py-3">Color</th>
                       <th className="px-6 py-3">N° Chasis</th>
                       <th className="px-6 py-3">Descripción</th>
@@ -231,33 +301,93 @@ const ListaVehiculos = () => {
                       <th className="px-6 py-3">Estado</th>
                     </tr>
                   </thead>
+
                   <tbody>
-                    {vehiculosFiltrados.map((v, idx) => (
-                      <tr
-                        key={v.id}
-                        onClick={() => setVehiculoSeleccionado(v)}
-                        className={`cursor-pointer border-b ${
-                          vehiculoSeleccionado?.id === v.id
-                            ? "bg-yellow-100"
-                            : idx % 2 === 0
-                            ? "bg-blue-50"
-                            : "bg-blue-100"
-                        }`}
-                      >
-                        <td className="px-6 py-4 font-semibold text-blue-900">
-                          {v.id}
-                        </td>
-                        <td className="px-6 py-4">{v.color}</td>
-                        <td className="px-6 py-4">{v.noChasis}</td>
-                        <td className="px-6 py-4">{v.descripcion}</td>
-                        <td className="px-6 py-4">{v.noPlaca}</td>
-                        <td className="px-6 py-4">{v.montoPorDia}</td>
-                        <td className="px-6 py-4">{v.tipoCombustibleId}</td>
-                        <td className="px-6 py-4">{v.modeloId}</td>
-                        <td className="px-6 py-4">{v.tipoVehiculoId}</td>
-                        <td className="px-6 py-4">{v.estadoId}</td>
-                      </tr>
-                    ))}
+                    {vehiculosFiltrados.map((v, idx) => {
+                      // obtener primera multimedia (si el endpoint lo trae)
+                      const firstMedia =
+                        v.multimedia && v.multimedia.length > 0
+                          ? v.multimedia[0]
+                          : null;
+
+                      // resolver URL usando helper si lo tienes, o construir con API_BASE
+                      const imgSrc = firstMedia
+                        ? typeof resolverUrlImagenVehiculo === "function"
+                          ? resolverUrlImagenVehiculo(v.id, firstMedia)
+                          : firstMedia.url ||
+                            `${API_BASE}/vehiculos/${v.id}/multimedia/${firstMedia.id}`
+                        : null;
+
+                      return (
+                        <tr
+                          key={v.id}
+                          onClick={() => setVehiculoSeleccionado(v)}
+                          className={`cursor-pointer border-b ${
+                            vehiculoSeleccionado?.id === v.id
+                              ? "bg-yellow-100"
+                              : idx % 2 === 0
+                              ? "bg-blue-50"
+                              : "bg-blue-100"
+                          }`}
+                        >
+                          <td className="px-6 py-4 font-semibold text-blue-900">
+                            {v.id}
+                          </td>
+
+                          {/* Imagen */}
+                          <td className="px-6 py-4">
+                            {imgSrc ? (
+                              <img
+                                src={imgSrc}
+                                alt={
+                                  firstMedia?.nombreArchivo ||
+                                  `Vehiculo ${v.id}`
+                                }
+                                className="w-20 h-14 object-cover rounded-md border"
+                                onError={(e) => {
+                                  // si falla, ocultar imagen rota y dejar placeholder
+                                  e.currentTarget.style.display = "none";
+                                }}
+                              />
+                            ) : (
+                              <div className="w-20 h-14 flex items-center justify-center bg-gray-100 rounded-md border text-gray-400">
+                                <Car className="h-6 w-6" />
+                              </div>
+                            )}
+                          </td>
+
+                          <td className="px-6 py-4">{v.color}</td>
+                          <td className="px-6 py-4">{v.noChasis}</td>
+                          <td className="px-6 py-4">{v.descripcion}</td>
+                          <td className="px-6 py-4">{v.noPlaca}</td>
+                          <td className="px-6 py-4">{v.montoPorDia}</td>
+                          <td className="px-6 py-4">
+                            {obtenerNombreTipoCombustible(v.tipoCombustibleId)}
+                          </td>
+                          <td className="px-6 py-4">
+                            {obtenerNombreModelo(v.modeloId)}
+                          </td>
+                          <td className="px-6 py-4">
+                            {obtenerNombreTipoVehiculo(v.tipoVehiculoId)}
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                v.estadoId === 1
+                                  ? "bg-green-100 text-green-800"
+                                  : v.estadoId === 2
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : v.estadoId === 3
+                                  ? "bg-orange-100 text-orange-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {obtenerNombreEstado(v.estadoId)}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

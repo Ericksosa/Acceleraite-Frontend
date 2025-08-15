@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const REST_API_URL = 'http://localhost:8080/api/estado';
+const REST_API_URL = 'http://localhost:8080/api/estados';
 
 export const listaEstados = () => {
     return axios.get(REST_API_URL)

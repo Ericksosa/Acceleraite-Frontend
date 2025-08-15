@@ -9,9 +9,8 @@ const FormularioTipoCombustible = ({ TipoCombustibleInicial, onSubmit }) => {
     estadoNombre: ""       
   });
 
-  const [estados, setEstados] = useState([]); // ¡Aquí estaba el problema!
+  const [estados, setEstados] = useState([]); 
 
-  // Cargar estados al montar el componente
   useEffect(() => {
     const cargarEstados = async () => {
       try {
